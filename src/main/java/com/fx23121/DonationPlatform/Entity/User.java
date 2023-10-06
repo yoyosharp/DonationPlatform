@@ -1,6 +1,7 @@
 package com.fx23121.DonationPlatform.Entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -40,6 +41,10 @@ public class User {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinColumn(name = "role_id")
     private Role roleID;
+
+    @OneToMany(mappedBy = "user",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    private List<UserDonation> userDonationList;
 
     //Define constructors
 
@@ -139,6 +144,14 @@ public class User {
 
     public void setRoleID(Role roleID) {
         this.roleID = roleID;
+    }
+
+    public List<UserDonation> getUserDonationList() {
+        return userDonationList;
+    }
+
+    public void setUserDonationList(List<UserDonation> userDonationList) {
+        this.userDonationList = userDonationList;
     }
 
     //define toString()

@@ -34,4 +34,90 @@ public class UserDonation {
     @JoinColumn(name = "user_id")
     private User user;
 
+    //Constructors
+
+    public UserDonation() {
+    }
+
+    public UserDonation(String createdAt, String money, String name, int status, String text) {
+        this.createdAt = createdAt;
+        this.money = money;
+        this.name = name;
+        this.status = status;
+        this.text = text;
+    }
+    //getters/setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Donation getDonation() {
+        return donation;
+    }
+
+    public void setDonation(Donation donation) {
+        this.donation = donation;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDonation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

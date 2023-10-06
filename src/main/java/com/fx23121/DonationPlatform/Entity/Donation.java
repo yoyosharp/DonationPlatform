@@ -1,6 +1,7 @@
 package com.fx23121.DonationPlatform.Entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "donation")
@@ -44,6 +45,10 @@ public class Donation {
 
     @Column(name = "status")
     private int status;
+
+    @OneToMany(mappedBy = "donation",
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    private List<UserDonation> userDonationList;
 
     //define constructors
 
@@ -160,6 +165,14 @@ public class Donation {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public List<UserDonation> getUserDonationList() {
+        return userDonationList;
+    }
+
+    public void setUserDonationList(List<UserDonation> userDonationList) {
+        this.userDonationList = userDonationList;
     }
 
     //define toString()
