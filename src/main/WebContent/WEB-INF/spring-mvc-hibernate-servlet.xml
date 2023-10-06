@@ -24,11 +24,9 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-
-
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/web_customer_tracker?useSSL=false&amp;severTimeZone=UTC" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/prj321_asm01?useSSL=false&amp;severTimeZone=UTC" />
 		<property name="user" value="datndfx23121" />
 		<property name="password" value="12345678" />
 

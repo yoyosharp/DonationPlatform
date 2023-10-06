@@ -6,6 +6,6 @@
 </head>
 <body>
 <h1>Home Page</h1>
-<p>The message: ${message}</p>
+<p>The message: ${user.userName}</p>
 </body>
 </html>

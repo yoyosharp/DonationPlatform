@@ -31,6 +31,7 @@ create table donation(
     description varchar(255) default 'donation',
     end_date varchar(255),
     money int default 0,
+    fund int default 0,
     name varchar(255) default 'Unnamed',
     organization_name varchar(255),
     phone_number varchar(255),
@@ -59,5 +60,6 @@ insert into user(email, full_name, password, phone_number, user_name, role_id) v
 
 select * from user;
 
+desc donation;
 
 
