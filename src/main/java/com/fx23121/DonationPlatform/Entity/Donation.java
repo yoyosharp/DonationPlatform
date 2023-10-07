@@ -46,7 +46,7 @@ public class Donation {
     @Column(name = "status")
     private int status;
 
-    @OneToMany(mappedBy = "donation",
+    @OneToMany(mappedBy = "donation", fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     private List<UserDonation> userDonationList;
 

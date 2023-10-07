@@ -18,7 +18,7 @@ public class DonationDaoImpl implements DonationDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void save(Donation donation) {
+    public void saveOrUpdate(Donation donation) {
         //get a new session
         Session session = sessionFactory.getCurrentSession();
         //save the object
@@ -50,5 +50,19 @@ public class DonationDaoImpl implements DonationDao {
         Donation donation = session.get(Donation.class, id);
         //remove the donation
         session.remove(donation);
+    }
+
+    @Override
+    public List<Donation> getDonationByFiled(String stringQuery) {
+        //get a new session
+        Session session = sessionFactory.getCurrentSession();
+        //create query
+        Query<Donation> query = session.createQuery("FROM Donation WHERE name LIKE :stringQuery " +
+                                                        "OR code LIKE :stringQuery " +
+                                                        "OR organizationName LIKE :stringQuery " +
+                                                        "OR phoneNumber LIKE :stringQuery",
+                                                        Donation.class);
+        query.setParameter("stringQuery", stringQuery);
+        return query.getResultList();
     }
 }
