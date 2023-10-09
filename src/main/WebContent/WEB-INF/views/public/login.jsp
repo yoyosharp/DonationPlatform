@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"	%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,7 @@
     <meta name="author" content="" />
     <title>Login - SB Admin</title>
 
-    <link rel="stylesheet" href="../../../../resources/static/admin1/assets/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/admin1/assets/css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-primary">
@@ -22,7 +24,7 @@
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
                             <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập</h3></div>
                             <div class="card-body">
-                                <form name='f' method='POST'>
+                                <form action="login" name='f' method='POST'>
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="inputEmail" name="email" type="text" placeholder="name@example.com" />
                                         <label for="inputEmail">Email</label>
@@ -49,6 +51,6 @@
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="../../../../resources/static/admin1/assets/js/scripts.js"></script>
+<script src="${pageContext.request.contextPath}/resources/static/admin1/assets/js/scripts.js"></script>
 </body>
 </html>

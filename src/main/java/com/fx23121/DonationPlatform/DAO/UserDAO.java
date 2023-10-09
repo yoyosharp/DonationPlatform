@@ -11,4 +11,5 @@ public interface UserDAO {
 
     List<User> getUserListByField(String stringQuery);
 
+    List<User> getUserList();
 }

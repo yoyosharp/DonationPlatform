@@ -9,7 +9,7 @@ public interface UserService {
 
     void addUser(User user);
 
-    void updateUser(int id);
+    void updateUser(User user);
 
     List<User> findUserByField(String stringQuery);
 }

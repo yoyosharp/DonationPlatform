@@ -2,11 +2,13 @@ package com.fx23121.DonationPlatform.Service;
 
 import com.fx23121.DonationPlatform.Entity.UserDonation;
 
+import java.util.List;
+
 public interface UserDonationService {
 
     void addUserDonation(UserDonation userDonation);
 
-    void getUserDonationByUser(int userId);
+    List<UserDonation> getUserDonationByUser(int userId);
 
-    void getUserDonationByDonation(int donationId);
+    List<UserDonation> getUserDonationByDonation(int donationId);
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserDonationServiceImpl implements UserDonationService {
 
@@ -15,18 +17,19 @@ public class UserDonationServiceImpl implements UserDonationService {
     @Override
     @Transactional
     public void addUserDonation(UserDonation userDonation) {
-
+        userDonationDAO.saveUserDonation(userDonation);
     }
 
     @Override
     @Transactional
-    public void getUserDonationByUser(int userId) {
-
+    public List<UserDonation> getUserDonationByUser(int userId) {
+        return userDonationDAO.getUserDonationListByUser(userId);
     }
 
     @Override
     @Transactional
-    public void getUserDonationByDonation(int donationId) {
+    public List<UserDonation> getUserDonationByDonation(int donationId) {
 
+        return userDonationDAO.getUserDonationListByDonation(donationId);
     }
 }

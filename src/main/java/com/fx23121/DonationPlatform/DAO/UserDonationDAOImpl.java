@@ -28,23 +28,23 @@ public class UserDonationDAOImpl implements UserDonationDAO {
     }
 
     @Override
-    public List<UserDonation> getUserDonationListByDonation(Donation donation) {
+    public List<UserDonation> getUserDonationListByDonation(int donationiD) {
         //get a new session
         Session session = sessionFactory.getCurrentSession();
         //create the query
         Query<UserDonation> query = session.createQuery("FROM UserDonation WHERE donation.id = :donationId", UserDonation.class);
-        query.setParameter("donationId", donation.getId());
+        query.setParameter("donationId", donationiD);
 
         return query.getResultList();
     }
 
     @Override
-    public List<UserDonation> getUserDonationListByUser(User user) {
+    public List<UserDonation> getUserDonationListByUser(int userId) {
         //get a new session
         Session session = sessionFactory.getCurrentSession();
         //create the query
         Query<UserDonation> query = session.createQuery("FROM UserDonation WHERE user.id = :userID", UserDonation.class);
-        query.setParameter("userID", user.getId());
+        query.setParameter("userID", userId);
 
         return query.getResultList();
     }

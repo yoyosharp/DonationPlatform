@@ -10,7 +10,7 @@ public interface UserDonationDAO {
 
     void saveUserDonation(UserDonation userDonation);
 
-    List<UserDonation> getUserDonationListByDonation(Donation donation);
+    List<UserDonation> getUserDonationListByDonation(int donationId);
 
-    List<UserDonation> getUserDonationListByUser(User user);
+    List<UserDonation> getUserDonationListByUser(int userId);
 }
