@@ -36,4 +36,18 @@ public class UserServiceImpl implements UserService {
     public List<User> findUserByField(String stringQuery) {
         return userDAO.getUserListByField(stringQuery);
     }
+
+    @Override
+    @Transactional
+    public User getUserByEmailAndPassword(String userEmail, String userPassword) {
+        List<User> userList = userDAO.getUserList();
+
+        for (User user: userList){
+            if (user.getEmail().equals(userEmail)) {
+                if (user.getPassword().equals(userPassword)) return user;
+                else return null;
+            }
+        }
+        return null;
+    }
 }

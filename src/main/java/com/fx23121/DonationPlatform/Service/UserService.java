@@ -12,4 +12,6 @@ public interface UserService {
     void updateUser(User user);
 
     List<User> findUserByField(String stringQuery);
+
+    User getUserByEmailAndPassword(String userEmail, String userPassword);
 }

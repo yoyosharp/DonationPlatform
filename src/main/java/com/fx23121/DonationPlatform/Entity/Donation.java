@@ -16,7 +16,7 @@ public class Donation {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "code")
+    @Column(name = "code", unique = true)
     private String code;
 
     @Column(name = "created")

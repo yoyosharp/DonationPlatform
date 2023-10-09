@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"	%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +25,7 @@
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
                             <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập</h3></div>
                             <div class="card-body">
-                                <form action="login" name='f' method='POST'>
+                                <form:form action="userLogin" name='f' method='POST' >
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="inputEmail" name="email" type="text" placeholder="name@example.com" />
                                         <label for="inputEmail">Email</label>
@@ -33,14 +34,14 @@
                                         <input class="form-control" id="inputPassword" name="password" type="password" placeholder="Password" />
                                         <label for="inputPassword">Mật khẩu</label>
                                     </div>
-                                    <div th:if="${error}">
+                                    <c:if test="${param.error != null}">
                                         <p style="color: red" > Sai tài khoản hoặc mật khẩu</p>
-                                    </div>
+                                    </c:if>
 
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                         <button class="btn btn-primary" type="submit" style="margin-left: 350px !important;">Login</button>
                                     </div>
-                                </form>
+                                </form:form>
                             </div>
                         </div>
                     </div>
