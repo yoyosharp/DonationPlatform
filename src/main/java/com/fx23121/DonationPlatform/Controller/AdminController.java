@@ -4,10 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HomeController {
+@RequestMapping("/admin")
+public class AdminController {
 
-    @RequestMapping("/")
-    public String showHome() {
-        return "public/home";
+    @RequestMapping("/logout")
+    public String logOut() {
+        return "login";
     }
 }

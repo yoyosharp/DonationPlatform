@@ -1,3 +1,7 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
+language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,67 +19,56 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="../../../../resources/static/admin1/assets/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="${pageContext.request.contextPath}/resources/static/admin1/assets/css/styles.css"
+    />
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      crossorigin="anonymous"
-    ></script>
 
-    <script src="../../../../resources/static/admin1/assets/js/scripts.js"></script>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
-      crossorigin="anonymous"
-    ></script>
-    <script th:src="@{/admin1/assets/js/datatables-simple-demo.js}"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
   </head>
 
   <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark"></nav>
-      <!-- Navbar Brand-->
-      <a class="navbar-brand ps-3" href="/admin/">QUẢN TRỊ</a>
-      <!-- Sidebar Toggle-->
-      <button
-        class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
-        id="sidebarToggle"
-        href="#!"
+      <nav
+        th:fragment="html_nav"
+        class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
       >
-        <i class="fas fa-bars"></i>
-      </button>
-      <!-- Navbar Search-->
-      <form
-        class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
-      ></form>
-      <!-- Navbar-->
-      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-        <li class="nav-item dropdown">
-          <a
-            th:if="${session.admin}"
-            class="nav-link dropdown-toggle"
-            href="/admin/logout"
-            role="button"
-            ><i class="fas fa-user fa-fw"></i><span> Logout</span></a
-          >
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdown1"
-          >
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Activity Log</a></li>
-            <li>
-              <hr class="dropdown-divider" />
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="redirect:admin/home">QUẢN TRỊ</a>
+        <!-- Sidebar Toggle-->
+        <button
+          class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+          id="sidebarToggle"
+          href="#!"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <!-- Navbar Search-->
+        <form
+          class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+        ></form>
+
+        <!-- Navbar-->
+        <ul class="navbar-nav me-3 me-lg-4">
+          <!-- User identity-->
+
+            <li style="color: white" class="nav-item navbar-text">
+            <c:if test="${currentUser != null}">
+              Welcome ${currentUser.fullName}!
+            </c:if>
             </li>
-            <li><a class="dropdown-item" href="/logout">Logout</a></li>
-          </ul>
-        </li>
-      </ul>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="admin/logout"
+              >Logout</a
+            >
+          </li>
+        </ul>
+      </nav>
     </nav>
 
     <div id="layoutSidenav">
@@ -146,16 +139,16 @@
           console.error(error);
         });
     </script>
-    <script src="js/JQuery3.3.1.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/admin1/assets/js/JQuery3.3.1.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       crossorigin="anonymous"
     ></script>
-    <script src="js/scripts.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/admin1/assets/js/scripts.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"
       crossorigin="anonymous"
     ></script>
-    <script src="js/datatables-simple-demo.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/static/admin1/assets/js/datatables-simple-demo.js"></script>
   </body>
 </html>
