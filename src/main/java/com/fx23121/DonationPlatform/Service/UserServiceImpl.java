@@ -56,4 +56,10 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int currentUserId) {
         return userDAO.getUserById(currentUserId);
     }
+
+    @Override
+    @Transactional
+    public int getUserCount(String stringQuery) {
+        return userDAO.getUserCount(stringQuery);
+    }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,9 +26,8 @@ public class AdminController {
 
     @RequestMapping("/home")
     public String showHomeAdmin(@RequestParam("currentUserId") int id, Model model) {
-        System.out.println(id);
+        //Pass the current user to the next page
         User currentUser = userService.getUserById(id);
-        System.out.println(currentUser);
         model.addAttribute("currentUser", currentUser);
         return "admin/home";
     }
@@ -37,19 +37,21 @@ public class AdminController {
     }
 
     @RequestMapping("/account")
-    public String showAccounts(@RequestParam("currentUserId") int id, Model model) {
-        System.out.println(id);
+    public String showAccounts(@RequestParam("currentUserId") int id,
+                               Model model) {
+        //Pass the current user to the next page
         User currentUser = userService.getUserById(id);
-        System.out.println(currentUser);
         model.addAttribute("currentUser", currentUser);
+        //retrieve user list
+        List<User> userList = userService.getUsers();
+        model.addAttribute("userList", userList);
         return "admin/account";
     }
 
     @RequestMapping("/donation")
     public String showDonations(@RequestParam("currentUserId") int id, Model model) {
-        System.out.println(id);
+        //Pass the current user to the next page
         User currentUser = userService.getUserById(id);
-        System.out.println(currentUser);
         model.addAttribute("currentUser", currentUser);
         return "admin/donation";
     }

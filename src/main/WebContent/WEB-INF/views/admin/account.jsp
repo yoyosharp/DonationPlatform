@@ -28,7 +28,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
       crossorigin="anonymous"
     ></script>
-
   </head>
 
   <body class="sb-nav-fixed">
@@ -38,7 +37,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
       >
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="redirect:admin/home">QUẢN TRỊ</a>
+        <!-- Create home link-->
+        <c:url var="adminHomeLink" value="/admin/home">
+          <c:param name="currentUserId" value="${currentUser.id}"></c:param>
+        </c:url>
+        <a class="navbar-brand ps-3" href="${adminHomeLink}">QUẢN TRỊ</a>
         <!-- Sidebar Toggle-->
         <button
           class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -56,14 +59,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <ul class="navbar-nav me-3 me-lg-4">
           <!-- User identity-->
 
-            <li style="color: white" class="nav-item navbar-text">
+          <li style="color: white" class="nav-item navbar-text">
             <c:if test="${currentUser != null}">
               Welcome ${currentUser.fullName}!
             </c:if>
-            </li>
+          </li>
 
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="admin/logout"
+            <a class="nav-link active" aria-current="page" href="logout"
               >Logout</a
             >
           </li>
@@ -73,23 +76,36 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
     <div id="layoutSidenav">
       <div id="layoutSidenav_nav">
-        <div th:fragment="html_menu" id="layoutSidenav_nav">
-          <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-              <div class="sb-sidenav-menu">
-                  <div class="nav">
-                      <a class="nav-link" href="account.html">
-                          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                          Quản lý người dùng
-                      </a>
-                      <a class="nav-link" href="donation.html">
-                          <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                          Quản lý đợt quyên góp
-                      </a>
-                  </div>
-              </div>
-
-          </nav>
-      </div>
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+          <div class="sb-sidenav-menu">
+            <div class="nav">
+              <c:url var="accountLink" value="/admin/account">
+                <c:param
+                  name="currentUserId"
+                  value="${currentUser.id}"
+                ></c:param>
+              </c:url>
+              <a class="nav-link" href="${accountLink}">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                Quản lý người dùng
+              </a>
+              <c:url var="donationLink" value="/admin/donation">
+                <c:param
+                  name="currentUserId"
+                  value="${currentUser.id}"
+                ></c:param>
+              </c:url>
+              <a class="nav-link" href="${donationLink}">
+                <div class="sb-nav-link-icon">
+                  <i class="fas fa-tachometer-alt"></i>
+                </div>
+                Quản lý đợt quyên góp
+              </a>
+            </div>
+          </div>
+        </nav>
       </div>
 
       <div id="layoutSidenav_content">
@@ -168,20 +184,42 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                           </div>
                         </form>
                       </div>
-
+    
                     </div>
                   </div>
                 </div>
                 <!-- Modal Add-->
               </div>
               <div class="card-body">
+                <!-- Search section -->
+                <form:form action="searchUser">
+                    <div class="row my-2" >
+                        <div class="col col-6">
+                            <select name="maxDisplayedResult" style="width: fit-content;">
+                                <option value="${displayedResult}">${displayedResult}</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                            </select>
+                            <span style="width: fit-content;">entries per page</span>
+                        </div>
+    
+                        <div class="col col-6 text-end">
+                            <input type="text" name="stringQuery" />
+                            <button type="submit">Search</button>
+                        </div>
+                    </div>
+                </form:form>
+                <!-- Search section -->
+
+
                 <table id="datatablesSimple">
                   <thead>
                   <tr style="background-color: gray !important;">
                     <th>Họ tên</th>
                     <th>Email</th>
                     <th>Số điện thoại</th>
-    <!--                <th>Địa chỉ</th>-->
+
                     <th>Tài khoản</th>
                     <th>Vai trò</th>
                     <th >Trạng thái</th>
@@ -190,7 +228,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   </thead>
                   <tfoot>
                   <tr>
-
+    
                   </tr>
                   </tfoot>
                   <tbody>
@@ -200,7 +238,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                       <td>Minh Khương</td>
                       <td>khuongtran1410@gmail.com</td>
                       <td>0337792891</td>
-    <!--                  <td th:text="${user.address}"></td>-->
                       <td>KhuongTM</td>
                       <td>Admin</td>
                       <td style="color: #1c7430;font-weight: bold">Hoạt động</td>
@@ -228,7 +265,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             Khóa
                           </button>
                         </form>
-
+    
                         <form th:if="${user.status == 0}"  th:action="@{/ql-user/un-lock}" method="post">
                           <input type="hidden" class="form-control" id="id" name="idUser" th:value="${user.id}">
                           <button type="submit" style="width: 80px" class="btn btn-success" >
@@ -254,11 +291,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                       Close
                                     </button>
                                     <button type="submit" class="btn btn-danger">Xóa</button>
-
+    
                                   </div>
                                 </form>
                               </div>
-
+    
                             </div>
                           </div>
                         </div>
@@ -284,12 +321,12 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                       Đóng
                                     </button>
                                     <button type="submit" class="btn btn-success">Gửi</button>
-
+    
                                   </div>
                                 </form>
-
+    
                               </div>
-
+    
                             </div>
                           </div>
                         </div>
@@ -312,7 +349,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                     <h5>Vai trò:</h5> <p th:text="${user.role.roleName}" ></p>
                                     <h5>Lần đăng nhập gần nhất:</h5> <p th:text="${user.createdAt}" ></p>
                                     <h5>Note:</h5> <p th:text="${user.note}" ></p></div>
-
+    
                                 </div>
                               </div>
                             </div>
@@ -390,33 +427,33 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                               </div>
                             </form>
                           </div>
-
+    
                         </div>
                       </div>
                     </div>
                     <!-- Modal Update-->
-
+    
                   </th:block>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-
+    
         </main>
-
+    
         <script>
-
+    
           ClassicEditor.create(document.querySelector('#editor')).then(eidt => {
             console.log("da" + eidt);
           })
                   .catch(error => {
                     console.error(error);
                   });
-
+    
         </script>
         <script>
-
+    
           var dodai = document.getElementById("dodai").value;
           var a = parseInt(dodai);
           for(var i = 1;i<=a+10;i++){
@@ -428,14 +465,20 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                       console.error(error);
                     });
           }
-
-
+    
+    
         </script>
         <footer th:replace="admin/fragments :: footer" class="py-4 bg-light mt-auto">
-
+    
         </footer>
       </div>
     </div>
+    
+    
+    
+    
+    
+    
     <script>
       $("#exampleModalView1").on("hidden.bs.modal", function (e) {
         $("#exampleModalView1 iframe").attr(
@@ -455,6 +498,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         });
       });
     </script>
+    
     <script>
       ClassicEditor.create(document.querySelector("#editor"))
         .then((eidt) => {

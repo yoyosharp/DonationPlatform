@@ -16,4 +16,6 @@ public interface UserService {
     User getUserByEmailAndPassword(String userEmail, String userPassword);
 
     User getUserById(int currentUserId);
+
+    int getUserCount(String stringQuery);
 }

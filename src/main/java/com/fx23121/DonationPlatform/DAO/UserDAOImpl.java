@@ -61,4 +61,20 @@ public class UserDAOImpl implements UserDAO{
         return query.getResultList();
     }
 
+    @Override
+    public int getUserCount(String stringQuery) {
+        //get a new session
+        Session session = sessionFactory.getCurrentSession();
+        //create query
+        Query<Integer> hQLQuery;
+        if (stringQuery.isEmpty())
+            hQLQuery = session.createQuery("SELECT COUNT(u) FROM User u WHERE status != -1", Integer.class);
+        else
+            hQLQuery = session.createQuery("SELECT COUNT(u) FROM FROM User u WHERE status != -1" +
+                    " AND (email LIKE :stringQuery" +
+                    " OR phoneNumber LIKE :stringQuery)", Integer.class);
+
+        return hQLQuery.getSingleResult();
+    }
+
 }
