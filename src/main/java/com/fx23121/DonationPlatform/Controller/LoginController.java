@@ -19,7 +19,7 @@ public class LoginController {
     private UserService userService;
 
     @RequestMapping("/login")
-    public String showHome() {
+    public String logIn() {
         return "login";
     }
 
@@ -33,5 +33,10 @@ public class LoginController {
     model.addAttribute("currentUser", currentUser);
     if (currentUser.getRoleID().getId() == 1) return "admin/home";
     else return "public/home";
+    }
+
+    @RequestMapping("/logout")
+    public String logOut() {
+        return "login";
     }
 }

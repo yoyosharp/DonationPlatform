@@ -14,4 +14,6 @@ public interface UserService {
     List<User> findUserByField(String stringQuery);
 
     User getUserByEmailAndPassword(String userEmail, String userPassword);
+
+    User getUserById(int currentUserId);
 }

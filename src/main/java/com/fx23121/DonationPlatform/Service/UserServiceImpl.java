@@ -50,4 +50,10 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    @Transactional
+    public User getUserById(int currentUserId) {
+        return userDAO.getUserById(currentUserId);
+    }
 }

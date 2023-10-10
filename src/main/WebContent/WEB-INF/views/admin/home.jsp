@@ -38,7 +38,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
       >
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="redirect:admin/home">QUẢN TRỊ</a>
+        <!-- Create home link-->
+        <c:url var="adminHomeLink" value="/admin/home">
+            <c:param name="currentUserId" value="${currentUser.id}"></c:param>
+        </c:url>
+        <a class="navbar-brand ps-3" href="${adminHomeLink}">QUẢN TRỊ</a>
         <!-- Sidebar Toggle-->
         <button
           class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -63,7 +67,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             </li>
 
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="admin/logout"
+            <a class="nav-link active" aria-current="page" href="logout"
               >Logout</a
             >
           </li>
@@ -76,13 +80,19 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
           <div class="sb-sidenav-menu">
             <div class="nav">
-              <a class="nav-link" href="account.html">
+            <c:url var="accountLink" value="/admin/account">
+                        <c:param name="currentUserId" value="${currentUser.id}"></c:param>
+                    </c:url>
+              <a class="nav-link" href="${accountLink}">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-tachometer-alt"></i>
                 </div>
                 Quản lý người dùng
               </a>
-              <a class="nav-link" href="donation.html">
+              <c:url var="donationLink" value="/admin/donation">
+                          <c:param name="currentUserId" value="${currentUser.id}"></c:param>
+                      </c:url>
+              <a class="nav-link" href="${donationLink}">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-tachometer-alt"></i>
                 </div>
