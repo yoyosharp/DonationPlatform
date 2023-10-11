@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 @EnableTransactionManagement
-public class DonationDaoImpl implements DonationDao {
+public class DonationDAOImpl implements DonationDAO {
 
     @Autowired
     private SessionFactory sessionFactory;

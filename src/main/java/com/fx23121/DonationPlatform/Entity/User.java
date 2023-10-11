@@ -51,7 +51,7 @@ public class User {
     public User() {
     }
 
-    public User(String userName, String password, String fullName, String address, String email, String phoneNumber, String note, String createdAt, Role roleID) {
+    public User(String userName, String password, String fullName, String address, String email, String phoneNumber, String note, String createdAt) {
         this.userName = userName;
         this.password = password;
         this.fullName = fullName;
@@ -60,7 +60,6 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.note = note;
         this.createdAt = createdAt;
-        this.roleID = roleID;
     }
 
     //define getters/setters

@@ -1,6 +1,6 @@
 package com.fx23121.DonationPlatform.Service;
 
-import com.fx23121.DonationPlatform.DAO.DonationDao;
+import com.fx23121.DonationPlatform.DAO.DonationDAO;
 import com.fx23121.DonationPlatform.Entity.Donation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import java.util.List;
 public class DonationServiceImpl implements DonationService {
 
     @Autowired
-    private DonationDao donationDao;
+    private DonationDAO donationDao;
 
     //get all the donations
     @Override

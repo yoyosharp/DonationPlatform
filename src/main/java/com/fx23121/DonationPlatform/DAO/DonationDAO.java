@@ -4,7 +4,7 @@ import com.fx23121.DonationPlatform.Entity.Donation;
 
 import java.util.List;
 
-public interface DonationDao {
+public interface DonationDAO {
 
     void saveOrUpdate(Donation donation);
 
