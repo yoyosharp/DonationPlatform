@@ -1,17 +1,24 @@
 package com.fx23121.DonationPlatform.Service;
 
+import com.fx23121.DonationPlatform.DAO.RoleDAO;
 import com.fx23121.DonationPlatform.DAO.UserDAO;
+import com.fx23121.DonationPlatform.Entity.Role;
 import com.fx23121.DonationPlatform.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private RoleDAO roleDAO;
 
     @Override
     @Transactional
@@ -21,8 +28,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void addUser(User user) {
-        userDAO.save(user);
+    public void addUser(User toAddUser) {
+        userDAO.save(toAddUser);
     }
 
     @Override

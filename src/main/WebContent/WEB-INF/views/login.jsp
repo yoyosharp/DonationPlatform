@@ -25,7 +25,7 @@
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
                             <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập</h3></div>
                             <div class="card-body">
-                                <form:form action="userLogin" name='f' method='POST' >
+                                <form action="userLogin" name='f' method='POST' >
                                     <div class="form-floating mb-3">
                                         <input class="form-control" id="inputEmail" name="email" type="text" placeholder="name@example.com" />
                                         <label for="inputEmail">Email</label>
@@ -41,7 +41,7 @@
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                                         <button class="btn btn-primary" type="submit" style="margin-left: 350px !important;">Login</button>
                                     </div>
-                                </form:form>
+                                </form>
                             </div>
                         </div>
                     </div>

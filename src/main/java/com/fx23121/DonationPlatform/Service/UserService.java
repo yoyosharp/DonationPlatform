@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserService {
     List<User> getUsers();
 
-    void addUser(User user);
+    void addUser(User toAddUser);
 
     void updateUser(User user);
 
