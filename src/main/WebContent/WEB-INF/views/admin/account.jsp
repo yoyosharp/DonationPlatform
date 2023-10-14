@@ -189,7 +189,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         <div class="row my-2">
                             <div class="col col-6">
                                 <select id="pageSizeSelect" style="width: fit-content;">
-                                    <option value="$pageSize">${pageSize}</option>
+                                    <option value="" selected disabled>${param.display}</option>
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                 </select>

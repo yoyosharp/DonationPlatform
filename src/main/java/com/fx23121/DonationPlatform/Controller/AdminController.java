@@ -43,8 +43,7 @@ public class AdminController {
 
     private String stringQuery="";
     private int pageIndex = 1;
-    private int pageSize = 2;
-
+    private int pageSize = 5;
 
     @RequestMapping("/account")
     public String showAccountPage(Model model) {
