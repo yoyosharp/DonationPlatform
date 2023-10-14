@@ -4,6 +4,7 @@ import com.fx23121.DonationPlatform.DAO.RoleDAO;
 import com.fx23121.DonationPlatform.DAO.UserDAO;
 import com.fx23121.DonationPlatform.Entity.Role;
 import com.fx23121.DonationPlatform.Entity.User;
+import com.fx23121.DonationPlatform.SearchData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +23,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<User> getUsers() {
-        return userDAO.getUserList();
-    }
-
-    @Override
-    @Transactional
     public void addUser(User toAddUser) {
         userDAO.save(toAddUser);
     }
@@ -40,8 +35,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<User> findUserByField(String stringQuery) {
-        return userDAO.getUserListByField(stringQuery);
+    public SearchData<User> getUserByFields(String stringQuery, int pageSize, int pageIndex) {
+        return userDAO.getUserByFields(stringQuery, pageSize, pageIndex);
     }
 
     @Override
@@ -64,9 +59,4 @@ public class UserServiceImpl implements UserService {
         return userDAO.getUserById(currentUserId);
     }
 
-    @Override
-    @Transactional
-    public int getUserCount(String stringQuery) {
-        return userDAO.getUserCount(stringQuery);
-    }
 }

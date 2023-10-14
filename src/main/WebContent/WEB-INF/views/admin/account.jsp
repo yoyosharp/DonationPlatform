@@ -111,11 +111,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form:form action="addUser" modelAttribute="toAddUser" method="POST">
+                                        <form:form action="addUser" modelAttribute="user" method="POST">
                                           <form:hidden path="id" />                                      
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <label for="fullName" class="col-form-label">Name:</label>
+                                                    <label for="fullName" class="col-form-label">Họ tên:</label>
                                                     <form:input cssClass="form-control" path="fullName" />
                                                     <form:errors path="fullName"></form:errors>
                                                 </div>
@@ -158,8 +158,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                            id="addPassword" path="password" />
                                                            <form:errors path="password"></form:errors>
                                                 </div>
-                                                
                                             </div>
+                                                <div class="col-6">
+                                                    <label for="role_id" class="col-form-label">Vai trò:</label>
+                                                    <select class="form-control" id="role_id" name="roleID" required>
+                                                      <option value="10" selected>Chọn loại vai trò</option>
+                                                      <option value="1">Admin</option>
+                                                      <option value="10">User</option>
+                                                    </select>
+                                                </div>
+                                                
+                                            
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                     Đóng
@@ -176,24 +185,26 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                     </div>
                     <div class="card-body">
                         <!-- Search section -->
-                        <form:form action="searchUser">
-                            <div class="row my-2">
-                                <div class="col col-6">
-                                    <select name="maxDisplayedResult" style="width: fit-content;">
-                                        <option value="${displayedResult}">${displayedResult}</option>
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                    </select>
-                                    <span style="width: fit-content;">entries per page</span>
-                                </div>
-
-                                <div class="col col-6 text-end">
-                                    <input type="text" name="stringQuery"/>
-                                    <button type="submit">Search</button>
-                                </div>
+                        
+                        <div class="row my-2">
+                            <div class="col col-6">
+                                <select id="pageSizeSelect" style="width: fit-content;">
+                                    <option value="$pageSize">${pageSize}</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                </select>
+                                <span style="width: fit-content;">entries per page</span>
                             </div>
-                        </form:form>
+                             
+                            <div class="col col-6 text-end">
+                                <form:form action="searchUser"> 
+                                <input type="text" name="stringQuery"/>
+                                 <button type="submit">Search</button>
+                            </form:form>
+                            </div>
+                            
+                        </div>
+                        
                         <!-- Search section -->
                         <table style="border: solid 1px black;" class="table table-striped">
                             <thead>
@@ -491,7 +502,15 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             </tbody>
                         </table>
 
-
+                        <div class="text-center">                            
+                            <c:forEach var="page" begin="1" end="${pageIndex - 1}">
+                                <a href="${pageContext.request.contextPath}/admin/account?display=5&page=${page}">${page}</a>
+                            </c:forEach>
+                            ${pageIndex}
+                            <c:forEach var="page" begin="${pageIndex + 1}" end="${maxPageCount}">
+                                <a href="${pageContext.request.contextPath}/admin/account?display=5&page=${page}">${page}</a>
+                            </c:forEach>                     
+                        </div>
                     </div>
                 </div>
             </div>
@@ -504,21 +523,20 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     </div>
 </div>
 
-
 <script>
-  $(document).ready(function () {
-      // Check if the "error" parameter is present in the URL
-      const urlParams = new URLSearchParams(window.location.search);
-      const error = urlParams.get("error");
-
-      // If "error" is set to "true," show the modal
-      if (error === "true") {
-          $('#userAddModal').modal('show');
-      }
-  });
+    var select = document.getElementById("pageSizeSelect");
+    select.addEventListener("change", function(){
+        var selected = this.value;
+        //select the base url
+        var url = new URL(window.location.href.toString());
+        url.searchParams.set("display", selected);
+        url.searchParams.set("page", 1);
+        window.location.href = url.toString();
+        
+    });
+   
 </script>
 
-</script>
 <script src="${pageContext.request.contextPath}/resources/static/admin1/assets/js/JQuery3.3.1.js"></script>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

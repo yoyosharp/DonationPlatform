@@ -1,21 +1,20 @@
 package com.fx23121.DonationPlatform.Service;
 
 import com.fx23121.DonationPlatform.Entity.User;
+import com.fx23121.DonationPlatform.SearchData;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> getUsers();
 
     void addUser(User toAddUser);
 
     void updateUser(User user);
 
-    List<User> findUserByField(String stringQuery);
+    SearchData<User> getUserByFields(String stringQuery, int pageSize, int PageIndex);
 
     User getUserByEmailAndPassword(String userEmail, String userPassword);
 
     User getUserById(int currentUserId);
 
-    int getUserCount(String stringQuery);
 }

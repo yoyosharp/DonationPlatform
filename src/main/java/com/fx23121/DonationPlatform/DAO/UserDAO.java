@@ -1,6 +1,7 @@
 package com.fx23121.DonationPlatform.DAO;
 
 import com.fx23121.DonationPlatform.Entity.User;
+import com.fx23121.DonationPlatform.SearchData;
 
 import java.util.List;
 
@@ -9,9 +10,7 @@ public interface UserDAO {
 
     User getUserById(int id);
 
-    List<User> getUserListByField(String stringQuery);
-
     List<User> getUserList();
 
-    int getUserCount(String stringQuery);
+    SearchData<User> getUserByFields(String stringQuery, int pageSize, int pageIndex);
 }

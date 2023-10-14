@@ -18,35 +18,34 @@ public class User {
     private int id;
 
     @Column(name = "user_name", unique = true)
-    @NotNull(message = "User name cannot be empty")
-    @Size(min = 1, message = "User name cannot be empty")
+    @NotNull(message = "User name không được bỏ trống")
+    @Size(min = 1, message = "User name không được bỏ trống")
     private String userName;
 
     @Column(name = "password")
-    @NotNull(message = "Must have a password")
-    @Size(min = 4, message = "Password must have at least 4 characters")
+    @NotNull(message = "Mật khẩu không được bỏ trống")
+    @Size(min = 6, message = "Mật khẩu phải có ít nhất 6 ký tự")
     private String password;
 
     @Column(name = "full_name")
-    @NotNull(message = "Name cannot be empty")
-    @Size(min = 1, message = "Name cannot be empty")
+    @NotNull(message = "Tên người dùng không được bỏ trống")
+    @Size(min = 1, message = "Tên người dùng không được bỏ trống")
     private String fullName;
 
     @Column(name = "address")
-    @NotNull(message = "Address cannot be empty")
-    @Size(min = 1, message = "Address cannot be empty")
+    @NotNull(message = "Địa chỉ không được bỏ trống")
+    @Size(min = 1, message = "Địa chỉ không được bỏ trống")
     private String address;
 
     @Column(name = "email")
-    @NotNull(message = "Email cannot be empty")
-    @Pattern(regexp = "^[A-Z0-9+_.-]+@[A-Z0-9.-]+$", message = "Not an email address")
-    @Size(min = 1, message = "Email cannot be empty")
+    @NotNull(message = "Email không được bỏ trống")
+    @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$", message = "Email không hợp lệ")
     private String email;
 
     @Column(name = "phone_number")
-    @NotNull(message = "Phone number cannot be empty")
-    @Size(min = 1, message = "Phone number cannot be empty")
-    @Pattern(regexp = "^[0-9]", message = "Wrong phone number format")
+    @NotNull(message = "SĐT không được bỏ trống")
+    @Size(min = 1, message = "Sđt không được bỏ trống")
+    @Pattern(regexp = "^\\d+$", message = "Vui lòng nhập chữ số")
     private String phoneNumber;
 
     @Column(name = "note")

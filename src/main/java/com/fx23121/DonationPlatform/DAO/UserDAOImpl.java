@@ -1,6 +1,7 @@
 package com.fx23121.DonationPlatform.DAO;
 
 import com.fx23121.DonationPlatform.Entity.User;
+import com.fx23121.DonationPlatform.SearchData;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -40,16 +41,6 @@ public class UserDAOImpl implements UserDAO{
         return query.getSingleResult();
     }
 
-    @Override
-    public List<User> getUserListByField(String stringQuery) {
-        //get a new session
-        Session session = sessionFactory.getCurrentSession();
-        //Create query
-        Query<User> query = session.createQuery("FROM User WHERE status != -1 AND (email LIKE :stringQuery" +
-                " OR phoneNumber LIKE :stringQuery)", User.class);
-        query.setParameter("stringQuery", "%" + stringQuery + "%");
-        return query.getResultList();
-    }
 
     @Override
     public List<User> getUserList() {
@@ -61,20 +52,35 @@ public class UserDAOImpl implements UserDAO{
         return query.getResultList();
     }
 
-    @Override
-    public int getUserCount(String stringQuery) {
-        //get a new session
-        Session session = sessionFactory.getCurrentSession();
-        //create query
-        Query<Integer> hQLQuery;
-        if (stringQuery.isEmpty())
-            hQLQuery = session.createQuery("SELECT COUNT(u) FROM User u WHERE status != -1", Integer.class);
-        else
-            hQLQuery = session.createQuery("SELECT COUNT(u) FROM FROM User u WHERE status != -1" +
-                    " AND (email LIKE :stringQuery" +
-                    " OR phoneNumber LIKE :stringQuery)", Integer.class);
 
-        return hQLQuery.getSingleResult();
+    @Override
+    public SearchData<User> getUserByFields(String stringQuery, int pageSize, int pageIndex) {
+
+        //get user count
+        Session session = sessionFactory.getCurrentSession();
+
+        String string = "%" + stringQuery + "%";
+        //create query for total result
+        Query<Long> countQuery = session.createQuery("SELECT COUNT(u) FROM User u" +
+                    " WHERE status != -1" +
+                    " AND (email LIKE :stringQuery OR phoneNumber LIKE :stringQuery)", Long.class);
+        countQuery.setParameter("stringQuery", string);
+        long totalCount = countQuery.getSingleResult();
+
+        //create user query
+        Query<User> userQuery =session.createQuery("FROM User WHERE status != -1 " +
+                    "AND (email LIKE :stringQuery OR phoneNumber LIKE :stringQuery)"
+                    , User.class);
+
+        userQuery.setParameter("stringQuery", string);
+        userQuery.setFirstResult((pageIndex - 1) * pageSize);
+        //get the result count for query
+        int resultCount = (int) Math.min(totalCount - (pageIndex - 1) * pageSize, pageSize);
+        userQuery.setMaxResults(resultCount);
+
+        List<User> result = userQuery.getResultList();
+
+        return new SearchData<>((int) totalCount, result);
     }
 
 }
