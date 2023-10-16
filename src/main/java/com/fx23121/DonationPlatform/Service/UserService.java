@@ -17,4 +17,9 @@ public interface UserService {
 
     User getUserById(int currentUserId);
 
+    void deleteUser(int currentUserId);
+
+    void lockUser(int currentUserId);
+
+    void unlockUser(int currentUserId);
 }

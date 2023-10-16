@@ -59,4 +59,28 @@ public class UserServiceImpl implements UserService {
         return userDAO.getUserById(currentUserId);
     }
 
+    @Override
+    @Transactional
+    public void deleteUser(int currentUserId) {
+        User currentUser = userDAO.getUserById(currentUserId);
+        currentUser.setStatus(-1);
+        userDAO.save(currentUser);
+    }
+
+    @Override
+    @Transactional
+    public void lockUser(int currentUserId) {
+        User currentUser = userDAO.getUserById(currentUserId);
+        currentUser.setStatus(0);
+        userDAO.save(currentUser);
+    }
+
+    @Override
+    @Transactional
+    public void unlockUser(int currentUserId) {
+        User currentUser = userDAO.getUserById(currentUserId);
+        currentUser.setStatus(1);
+        userDAO.save(currentUser);
+    }
+
 }

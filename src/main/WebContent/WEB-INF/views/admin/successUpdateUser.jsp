@@ -8,7 +8,7 @@ pageEncoding="UTF-8"%>
   <body>
     <script>
       // Display an alert with a "successful" message
-      alert("Thêm thành công");
+      alert("Cập nhật thành công");
 
       // Redirect to another page after the user clicks "OK"
       window.location.href = "${pageContext.request.contextPath}/admin/account";

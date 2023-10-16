@@ -2,6 +2,7 @@ package com.fx23121.DonationPlatform.Service;
 
 import com.fx23121.DonationPlatform.DAO.DonationDAO;
 import com.fx23121.DonationPlatform.Entity.Donation;
+import com.fx23121.DonationPlatform.SearchData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +16,6 @@ public class DonationServiceImpl implements DonationService {
     private DonationDAO donationDao;
 
     //get all the donations
-    @Override
-    @Transactional
-    public List<Donation> getDonationList() {
-        return donationDao.getDonationList();
-    }
-
 
     @Override
     @Transactional
@@ -29,11 +24,7 @@ public class DonationServiceImpl implements DonationService {
     }
 
     //find donations which have fields contain stringQuery
-    @Override
-    @Transactional
-    public List<Donation> findDonationByField(String stringQuery) {
-        return donationDao.getDonationByFiled(stringQuery);
-    }
+
 
     //no validate when delete donation because this method will always be called from
     //a validated context( i.e a queried donation list)
@@ -55,5 +46,10 @@ public class DonationServiceImpl implements DonationService {
     @Transactional
     public Donation getDonation(int id) {
         return donationDao.getDonation(id);
+    }
+
+    @Override
+    public SearchData<Donation> getDonationByField(String stringQuery, int pageSize, int pageIndex) {
+        return null;
     }
 }

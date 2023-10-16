@@ -38,7 +38,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             th:fragment="html_nav"
             class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
     >
-        <!-- Navbar Brand--> 
+        <!-- Navbar Brand-->
+        <!-- Create home link-->
         
         <a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/admin/home">QUẢN TRỊ</a>
         <!-- Sidebar Toggle-->
@@ -49,9 +50,15 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         >
             <i class="fas fa-bars"></i>
         </button>
-       
+        <!-- Navbar Search-->
+        <form
+                class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
+        ></form>
+
         <!-- Navbar-->
-        <ul class="navbar-nav me-3 me-lg-4">         
+        <ul class="navbar-nav me-3 me-lg-4">
+            <!-- User identity-->
+
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/logout"
                 >Logout</a
@@ -86,7 +93,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Danh sách người dùng</h1>
+                <h1 class="mt-4">Kết quả tìm kiếm</h1>
                 <div class="card mb-4">
                     <div class="card-header">
                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
@@ -154,7 +161,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                             </div>
                                                 <div class="col-6">
                                                     <label for="role_id" class="col-form-label">Vai trò:</label>
-                                                    <select class="form-control" id="role_id" name="roleId" required>
+                                                    <select class="form-control" id="role_id" name="roleID" required>
                                                       <option value="10" selected>Chọn loại vai trò</option>
                                                       <option value="1">Admin</option>
                                                       <option value="10">User</option>
@@ -193,10 +200,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             
                             <!-- Search section -->     
                             <div class="col col-6 text-end">
-                                <form action="searchUser"> 
-                                    <c:if test="${stringQuery != null}">
-                                        <input type="text" name="keyword" placeholder="${stringQuery}"/>
-                                    </c:if>
+                                <form action="searchUser">                                     
+                                        <input type="text" name="keyword" placeholder="${stringQuery}"/>                                
                                  <button type="submit">Search</button>
                             </form>
                             </div>
@@ -300,24 +305,21 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                         <div class="modal-body">
                                                             <form:form action="updateUser" method="post" modelAttribute="user">
                                                                 
-                                                                <form:input type="hidden" path="id" value="${user.id}"/>
-                                                                <form:input type="hidden" path="password" value="${user.password}"></form:input>
-                                                                
+                                                                <form:input type="hidden" path="id"  value="${user.id}"/>
                                                                 <div class="row">
                                                                     <div class="col-6">
                                                                         <label for="updateName" class="col-form-label">Họ
                                                                             và tên:</label>
                                                                         <form:input type="text" cssClass="form-control"
                                                                                id="updateName" path="fullName"
-                                                                               value="${user.fullName}"
                                                                                />
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <label for="updateEmail" class="col-form-label">Email:</label>
                                                                         <form:input type="email" cssClass="form-control"
                                                                                id="updateEmail" path="email"
-                                                                               value="${user.email}"
-                                                                            readonly="true" />
+                                                                               placeholder="${user.email}"
+                                                                            disabled="true" />
                                                                     </div>
                                                                 </div>
 
@@ -327,7 +329,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                                             điện thoại</label>
                                                                         <form:input type="text" cssClass="form-control"
                                                                                id="updatePhone" path="phoneNumber"
-                                                                               value="${user.phoneNumber}"
                                                                                />
                                                                     </div>
                                                                     <div class="col-6">
@@ -335,7 +336,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                                                class="col-form-label">Địa chỉ:</label>
                                                                         <form:input type="text" cssClass="form-control"
                                                                                id="updateAddress" path="address"
-                                                                               value="${user.address}"
                                                                                />
                                                                     </div>
                                                                 </div>
@@ -346,16 +346,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                                                class="col-form-label">Tài khoản:</label>
                                                                         <form:input type="text" cssClass="form-control"
                                                                                id="updateUsername" path="userName"
-                                                                               value="${user.userName}" 
-                                                                               readonly="true"/>
+                                                                               placeholder="${user.userName}" 
+                                                                               disabled="true"/>
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <label for="updateRole" class="col-form-label">Vai
                                                                             trò:</label>
                                                                         <select class="form-control" id="updateRole"
-                                                                            name="role-Id" required>                                                                   
+                                                                            name="roleId" required>
+                                                                            <option value="" selected disabled>${user.roleId.roleName}</option>
                                                                             <option value="1">Admin</option>
-                                                                            <option value="10" selected>User</option>
+                                                                            <option value="10">User</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -394,7 +395,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                             <p>User name : ${user.userName}</p>
                                                             <p>Trạng thái:
                                                                 <c:if test="${user.status == 0}">
-                                                                    <span class="text-danger fs-6 fw-bold">Đã khoá</span>
+                                                                    <span class="text-danger fs-6">Đã khoá</span>
                                                                 </c:if>
                                                                 <c:if test="${user.status == 1}">
                                                                     <span class="text-success fs-6 fw-bold">Hoạt động</span>
@@ -402,7 +403,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                             </p>
                                                             <form action="userDelete" method="post">
                                                                                                                             
-                                                              <input type="hidden" id="id" name="userId" value="${user.id}">                                                                
+                                                              <input type="hidden" id="id" name="userId" value="{user.id}">                                                                
                                                                 <div class="modal-footer" style="margin-top: 20px">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close
@@ -439,8 +440,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                         </div>
                                                         <div class="modal-body">
                                                             <p>Người dùng : ${user.userName}</p>
-                                                            <form action="userLock" method="post">                                                               
-                                                              <input type="hidden" id="id" name="userId" value="${user.id}">                                                               
+                                                            <form action="userLock" method="post">
+                                                                                                                           
+                                                              <input type="hidden" id="id" name="userId" value="{user.id}"> 
                                                                 <div class="modal-footer" style="margin-top: 20px">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close
@@ -478,7 +480,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                             <p>Người dùng : ${user.userName}</p>
                                                             <form action="userUnlock" method="post">
                                                                                                                            
-                                                              <input type="hidden" id="id" name="userId" value="${user.id}"> 
+                                                              <input type="hidden" id="id" name="userId" value="{user.id}"> 
                                                                 <div class="modal-footer" style="margin-top: 20px">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close
@@ -503,17 +505,16 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
                         <div class="text-center">                            
                             <c:forEach var="page" begin="1" end="${pageIndex - 1}">
-                                <a href="${pageContext.request.contextPath}/admin/account?display=${display}&page=${page}">${page}</a>
+                                <a href="${pageContext.request.contextPath}/admin/searchUser?keyword=${stringQuery}&display=${display}&page=${page}">${page}</a>
                             </c:forEach>
                             ${pageIndex}
                             <c:forEach var="page" begin="${pageIndex + 1}" end="${maxPageCount}">
-                                <a href="${pageContext.request.contextPath}/admin/account?display=${display}&page=${page}">${page}</a>
+                                <a href="${pageContext.request.contextPath}/admin/searchUser?keyword=${stringQuery}&display=${display}&page=${page}">${page}</a>
                             </c:forEach>                     
                         </div>
                     </div>
                 </div>
             </div>
-
         </main>
 
         <footer th:replace="admin/fragments :: footer" class="py-4 bg-light mt-auto">
@@ -530,7 +531,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         var url = new URL(window.location.href.toString());
         url.searchParams.set("display", selected);
         url.searchParams.set("page", 1);
-        window.location.href = url.toString();   
+        window.location.href = url.toString();
+        
     });
    
 </script>

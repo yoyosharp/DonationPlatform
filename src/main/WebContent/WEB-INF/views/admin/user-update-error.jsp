@@ -100,7 +100,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                     </div>
                     <div class="card-body">
                             <div class="row">
-                                <form:form action="addUser" modelAttribute="user" method="POST">
+                                <form:form action="updateUser" modelAttribute="user" method="POST">
+                                      <form:input type="hidden" path="id" value="${user.id}"></form:input>
+                                      <form:input type="hidden" path="password" value="user.password"></form:input>
                                             <div class="row">
                                                 <div class="col-6">
                                                     <label for="fullName" class="col-form-label">Họ tên:</label>
@@ -111,7 +113,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                     <label for="addEmail"
                                                            class="col-form-label">Email:</label>
                                                     <form:input type="email" cssClass="form-control"
-                                                           id="addEmail" path="email" />
+                                                           id="addEmail" path="email" readonly="true"/>
                                                            <form:errors path="email" cssClass="text-danger"></form:errors>
                                                 </div>
                                             </div>
@@ -136,39 +138,37 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                     <label for="addUserName"
                                                            class="col-form-label">Tài khoản:</label>
                                                     <form:input type="text" cssClass="form-control"
-                                                           id="addUserName" path="userName"  />
+                                                           id="addUserName" path="userName" readonly="true" />
                                                            <form:errors path="userName" cssClass="text-danger"></form:errors>
                                                 </div>
+                                                
                                                 <div class="col-6">
-                                                    <label for="addPassword"
-                                                           class="col-form-label">Mật khẩu:</label>
-                                                    <form:input type="password" cssClass="form-control"
-                                                           id="addPassword" path="password" />
-                                                           <form:errors path="password" cssClass="text-danger"></form:errors>
+                                                    <label for="role_id" class="col-form-label">Vai trò:</label>
+                                                    <select class="form-control" id="role_id" name="role-Id" required>                                        
+                                                      <option value="1" >Admin</option>
+                                                      <option value="10" selected>User</option>
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                <label for="role_id" class="col-form-label">Vai trò:</label>
-                                                <select class="form-control" id="role_id" name="roleId" required>
-                                                  <option value="10" selected>Chọn loại vai trò</option>
-                                                  <option value="1">Admin</option>
-                                                  <option value="10">User</option>
-                                                </select>
-                                            </div>
+                                            
 
                                             <div class= "mx-auto my-3">
                                                 <a type="button" class="btn btn-secondary" href="${pageContext.request.contextPath}/admin/account">
                                                     Trở lại
                                                 </a>
-                                                <button type="submit" class="btn btn-primary">Thêm</button>
+                                                <button type="submit" class="btn btn-primary">Cập nhật</button>
                                             </div>
                                 </form:form>                                
                             </div>
                     </div>
                 </div>
             </div>
+
         </main>
 
+        <footer th:replace="admin/fragments :: footer" class="py-4 bg-light mt-auto">
+
+        </footer>
     </div>
 </div>
 

@@ -28,7 +28,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
       crossorigin="anonymous"
     ></script>
-
   </head>
 
   <body class="sb-nav-fixed">
@@ -38,11 +37,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
       >
         <!-- Navbar Brand-->
-        <!-- Create home link-->
-        <c:url var="adminHomeLink" value="/admin/home">
-            <c:param name="currentUserId" value="${currentUser.id}"></c:param>
-        </c:url>
-        <a class="navbar-brand ps-3" href="${adminHomeLink}">QUẢN TRỊ</a>
+        <a
+          class="navbar-brand ps-3"
+          href="${pageContext.request.contextPath}/admin/home"
+          >QUẢN TRỊ</a
+        >
         <!-- Sidebar Toggle-->
         <button
           class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -51,23 +50,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         >
           <i class="fas fa-bars"></i>
         </button>
-        <!-- Navbar Search-->
-        <form
-          class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
-        ></form>
-
         <!-- Navbar-->
         <ul class="navbar-nav me-3 me-lg-4">
-          <!-- User identity-->
-
-            <li style="color: white" class="nav-item navbar-text">
-            <c:if test="${currentUser != null}">
-              Welcome ${currentUser.fullName}!
-            </c:if>
-            </li>
-
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="logout"
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="${pageContext.request.contextPath}/logout"
               >Logout</a
             >
           </li>
@@ -80,9 +69,12 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
           <div class="sb-sidenav-menu">
             <div class="nav">
-            <c:url var="accountLink" value="/admin/account">
-                        <c:param name="currentUserId" value="${currentUser.id}"></c:param>
-                    </c:url>
+              <c:url var="accountLink" value="/admin/account">
+                <c:param
+                  name="currentUserId"
+                  value="${currentUser.id}"
+                ></c:param>
+              </c:url>
               <a class="nav-link" href="${accountLink}">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-tachometer-alt"></i>
@@ -90,8 +82,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 Quản lý người dùng
               </a>
               <c:url var="donationLink" value="/admin/donation">
-                          <c:param name="currentUserId" value="${currentUser.id}"></c:param>
-                      </c:url>
+                <c:param
+                  name="currentUserId"
+                  value="${currentUser.id}"
+                ></c:param>
+              </c:url>
               <a class="nav-link" href="${donationLink}">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-tachometer-alt"></i>
@@ -105,50 +100,471 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
       <div id="layoutSidenav_content">
         <main>
-          <h1>Home admin</h1>
+          <main>
+            <div class="container-fluid px-4">
+              <h1 class="mt-4">Danh sách đợt quyên góp</h1>
+              <div class="card mb-4">
+                <div class="card-header">
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModalAdd"
+                  >
+                    Thêm mới
+                  </button>
+                  <!-- Modal Add-->
+                  <div
+                    class="modal fade"
+                    id="exampleModalAdd"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabelll">
+                            Thêm mới
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                        <div class="modal-body">
+                          <form method="post" enctype="multipart/form-data">
+                            <div class="row">
+                              <div class="col-6">
+                                <label for="addname" class="col-form-label"
+                                  >Mã đợt quyên góp:</label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="addname"
+                                  name="code"
+                                  required
+                                />
+                              </div>
+                              <div class="col-6">
+                                <label for="addcost" class="col-form-label"
+                                  >Tên đợt quyên góp:</label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="addcost"
+                                  name="name"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-6">
+                                <label for="addname" class="col-form-label"
+                                  >Ngày bắt đầu:</label
+                                >
+                                <input
+                                  type="date"
+                                  class="form-control"
+                                  id="addname"
+                                  name="start"
+                                  required
+                                />
+                              </div>
+                              <div class="col-6">
+                                <label for="addcost" class="col-form-label"
+                                  >Ngày kết thúc:</label
+                                >
+                                <input
+                                  type="date"
+                                  class="form-control"
+                                  id="addcost"
+                                  name="end"
+                                  required
+                                />
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-6">
+                                <label for="addname" class="col-form-label"
+                                  >Tổ chức:</label
+                                >
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="addname"
+                                  name="tochuc"
+                                  required
+                                />
+                              </div>
+                              <div class="col-6">
+                                <label for="addcost" class="col-form-label"
+                                  >Số điện thoại:</label
+                                >
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  id="addcost"
+                                  name="sdt"
+                                  required
+                                />
+                              </div>
+                              <div class="col-12">
+                                <label for="ct_id" class="col-form-label"
+                                  >Nội dung:</label
+                                >
+                                <textarea
+                                  name="noidung"
+                                  class="form-control"
+                                  cols="50"
+                                  rows="5"
+                                >
+Nhập nội dung</textarea
+                                >
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                              >
+                                Đóng
+                              </button>
+                              <button type="submit" class="btn btn-primary">
+                                Thêm
+                              </button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Modal Add-->
+                </div>
+                <div class="card-body">
+                  <table id="datatablesSimple">
+                    <thead>
+                      <tr style="background-color: gray !important">
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Tổ chức</th>
+                        <th>Số điện thoại</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th style="width: 220px">Hành động</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr></tr>
+                    </tfoot>
+                    <tbody>
+                      <th>
+                        <tr>
+                          <td>HE180087</td>
+                          <td>Minh Khương</td>
+                          <td>10/10/2023</td>
+                          <td>10/13/2023</td>
+                          <td>Vì trẻ em</td>
+                          <td>02898274423</td>
+                          <td>10,000 VND</td>
+                          <td>Mới tạo</td>
+                          <td style="">
+                            <button
+                              type="button"
+                              style="width: 105px"
+                              class="btn btn-primary"
+                              data-bs-toggle="modal"
+                              th:data-bs-target="'#exampleModal'+${user.id}"
+                            >
+                              Cập nhật
+                            </button>
+                            <a
+                              style="width: 105px"
+                              class="btn btn-warning"
+                              th:href="'detail/'+ ${user.id}"
+                            >
+                              Chi tiết
+                            </a>
+
+                            <button
+                              type="button"
+                              style="width: 105px"
+                              class="btn btn-danger mt-1"
+                              data-bs-toggle="modal"
+                              th:data-bs-target="'#idModelDel'+${user.id}"
+                            >
+                              Xóa
+                            </button>
+                            <form
+                              method="post"
+                              style="margin-left: 110px; margin-top: -38px"
+                            >
+                              <input
+                                type="hidden"
+                                class="form-control"
+                                id="id"
+                                name="idD"
+                                th:value="${user.id}"
+                              />
+                              <button
+                                type="submit"
+                                style="width: 105px"
+                                class="btn btn-success"
+                              >
+                                Quyên góp
+                              </button>
+                            </form>
+                            <form method="post" style="margin-top: 5px">
+                              <input
+                                type="hidden"
+                                class="form-control"
+                                id="id"
+                                name="idD"
+                                th:value="${user.id}"
+                              />
+                              <button
+                                type="submit"
+                                style="width: 105px"
+                                class="btn btn-success"
+                              >
+                                Kết thúc
+                              </button>
+                            </form>
+                            <form method="post" style="margin-top: 5px">
+                              <input
+                                type="hidden"
+                                class="form-control"
+                                id="id"
+                                name="idD"
+                                th:value="${user.id}"
+                              />
+                              <button
+                                type="submit"
+                                style="width: 105px"
+                                class="btn btn-success"
+                              >
+                                Đóng
+                              </button>
+                            </form>
+                            <div
+                              class="modal fade"
+                              th:id="'idModelDel' + ${user.id}"
+                              tabindex="-1"
+                              aria-labelledby="exampleModalLabel"
+                              aria-hidden="true"
+                            >
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5
+                                      class="modal-title"
+                                      id="exampleModalLabel"
+                                    >
+                                      Bạn chắc chắn muốn xóa ?
+                                    </h5>
+                                    <button
+                                      type="button"
+                                      class="btn-close"
+                                      data-bs-dismiss="modal"
+                                      aria-label="Close"
+                                    ></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Đợt quyên góp :
+                                    <span th:text="${user.name}"></span>
+                                    <form method="post">
+                                      <div
+                                        class="modal-footer"
+                                        style="margin-top: 20px"
+                                      >
+                                        <button
+                                          type="button"
+                                          class="btn btn-secondary"
+                                          data-bs-dismiss="modal"
+                                        >
+                                          Close
+                                        </button>
+                                        <button
+                                          type="submit"
+                                          class="btn btn-danger"
+                                        >
+                                          Xóa
+                                        </button>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <div
+                          class="modal fade"
+                          tabindex="-1"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabell">
+                                  Cập nhật
+                                </h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <form
+                                  enctype="multipart/form-data"
+                                  method="post"
+                                >
+                                  <input type="hidden" name="id" />
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <label
+                                        for="addname"
+                                        class="col-form-label"
+                                        >Mã đợt quyên góp:</label
+                                      >
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="addname"
+                                        name="code"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="col-6">
+                                      <label
+                                        for="addcost"
+                                        class="col-form-label"
+                                        >Tên đợt quyên góp:</label
+                                      >
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="addcost"
+                                        name="name"
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <label
+                                        for="addname"
+                                        class="col-form-label"
+                                        >Ngày bắt đầu:</label
+                                      >
+                                      <input
+                                        type="date"
+                                        class="form-control"
+                                        id="addname"
+                                        name="start"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="col-6">
+                                      <label
+                                        for="addcost"
+                                        class="col-form-label"
+                                        >Ngày kết thúc:</label
+                                      >
+                                      <input
+                                        type="date"
+                                        class="form-control"
+                                        id="addcost"
+                                        name="end"
+                                        required
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <label
+                                        for="addname"
+                                        class="col-form-label"
+                                        >Tổ chức:</label
+                                      >
+                                      <input
+                                        type="text"
+                                        class="form-control"
+                                        id="addname"
+                                        name="tochuc"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="col-6">
+                                      <label
+                                        for="addcost"
+                                        class="col-form-label"
+                                        >Số điện thoại:</label
+                                      >
+                                      <input
+                                        type="number"
+                                        class="form-control"
+                                        id="addcost"
+                                        name="sdt"
+                                        required
+                                      />
+                                    </div>
+                                    <div class="col-12">
+                                      <label for="ct_id" class="col-form-label"
+                                        >Nội dung:</label
+                                      >
+                                      <textarea
+                                        name="noidung"
+                                        class="form-control"
+                                        cols="50"
+                                        rows="5"
+                                      ></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button
+                                      type="button"
+                                      class="btn btn-secondary"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Đóng
+                                    </button>
+                                    <button
+                                      type="submit"
+                                      class="btn btn-primary"
+                                    >
+                                      Lưu
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </th>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </main>
         </main>
         <footer class="py-4 bg-light mt-auto">
           <div class="container-fluid px-4"></div>
         </footer>
       </div>
     </div>
-    <script>
-      $("#exampleModalView1").on("hidden.bs.modal", function (e) {
-        $("#exampleModalView1 iframe").attr(
-          "src",
-          $("#exampleModalView1 iframe").attr("src")
-        );
-      });
-    </script>
-    <script>
-      $(document).ready(function () {
-        $("#autoWidth,#autoWidth2").lightSlider({
-          autoWidth: true,
-          loop: true,
-          onSliderLoad: function () {
-            $("#autoWidth,#autoWidth2").removeClass("cS-hidden");
-          },
-        });
-      });
-    </script>
-    <script>
-      ClassicEditor.create(document.querySelector("#editor"))
-        .then((eidt) => {
-          console.log("da" + eidt);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    </script>
-    <script>
-      ClassicEditor.create(document.querySelector("#editor1"))
-        .then((eidt) => {
-          console.log("da" + eidt);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    </script>
+
     <script src="${pageContext.request.contextPath}/resources/static/admin1/assets/js/JQuery3.3.1.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

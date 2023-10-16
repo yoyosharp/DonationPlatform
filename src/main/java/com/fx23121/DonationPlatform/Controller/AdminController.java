@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,15 +46,19 @@ public class AdminController {
     private int pageIndex = 1;
     private int pageSize = 5;
 
+    @RequestMapping("/home")
+    public String showHome() {
+        return "admin/home";
+    }
+
     @RequestMapping("/account")
     public String showAccountPage(Model model) {
-        //retrieve search data
+        //retrieve users data
         SearchData<User> data = userService.getUserByFields(stringQuery, pageSize, pageIndex);
         //retrieve user list from search data
         List<User> users = data.getResultList();
         //retrieve max page count from search data
         int maxResultCount = data.getMaxResultCount();
-        System.out.println(maxResultCount);
 
         int maxPageCount = maxResultCount/pageSize;
         if (maxResultCount%pageSize != 0) maxPageCount++;
@@ -68,12 +73,14 @@ public class AdminController {
         model.addAttribute("pageIndex", pageIndex);
         //add stringQuery to the model for search function
         model.addAttribute("stringQuery", stringQuery);
+        //add pageSize to the model for display function
+        model.addAttribute("display", pageSize);
         return "admin/account";
     }
 
     @RequestMapping(value = "/account", params = {"display", "page"} )
     public String showAccountPage(@RequestParam(value = "display", defaultValue = "5") int pageSize,
-                                  @RequestParam("page") int pageIndex,
+                                  @RequestParam(value = "page", defaultValue = "1") int pageIndex,
                                   Model model) {
         stringQuery = "";
         SearchData<User> data = userService.getUserByFields(stringQuery, pageSize, pageIndex);
@@ -81,8 +88,8 @@ public class AdminController {
         List<User> users = data.getResultList();
         //retrieve max page count from search data
         int maxResultCount = data.getMaxResultCount();
-        System.out.println(maxResultCount);
 
+        this.pageSize = pageSize;
         int maxPageCount = maxResultCount/pageSize;
         if (maxResultCount%pageSize != 0) maxPageCount++;
 
@@ -95,27 +102,23 @@ public class AdminController {
         //add pageIndex to the model for display/search function
         model.addAttribute("pageIndex", pageIndex);
         //add stringQuery to the model for search function
-        model.addAttribute("stringQuery", stringQuery);
+        model.addAttribute("stringQuery", this.stringQuery);
+        //add pageSize to the model for display function
+        model.addAttribute("display", pageSize);
         return "admin/account";
-    }
 
-    @RequestMapping("/donation")
-    public String showDonations( Model model) {
-        //Pass the current user to the next page
-        return "admin/donation";
     }
 
     //    addUser
     @PostMapping("/addUser")
-    public String addUser(@RequestParam("roleID") int roleID,
-                          @Valid @ModelAttribute("toAddUser") User user,
+    public String addUser(@RequestParam("roleID") int roleId,
+                          @Valid @ModelAttribute("user") User user,
                           BindingResult result,
                           Model model){
 
-        System.out.println(roleID);
         //if validator has error return the add user page
         if (result.hasErrors()) {
-            model.addAttribute("toAddUser", user);
+            model.addAttribute("user", user);
             return "admin/user-add-error";
         }
 
@@ -124,7 +127,7 @@ public class AdminController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         user.setCreatedAt(formatter.format(LocalDateTime.now()));
         //add role
-        Role role = roleService.getRole(roleID);
+        Role role = roleService.getRole(roleId);
         user.setRoleId(role);
         user.setStatus(1);
         //save the user
@@ -132,5 +135,105 @@ public class AdminController {
         return "admin/successAddUser";
     }
 
+    @RequestMapping(value = "/searchUser")
+    public String search(@RequestParam(name = "keyword", required = true) String stringQuery,
+                         @RequestParam(name = "display", defaultValue = "5", required = false) Integer pageSize,
+                         @RequestParam(name = "page", required = false) Integer pageIndex,
+                         Model model){
 
+        if (pageSize == null) pageSize = this.pageSize;
+        if (pageIndex == null) pageIndex = 1;
+        SearchData<User> data = userService.getUserByFields(stringQuery, pageSize, pageIndex);
+        //retrieve user list from search data
+        List<User> users = data.getResultList();
+
+        //retrieve max page count from search data
+        int maxResultCount = data.getMaxResultCount();
+        int maxPageCount = maxResultCount/pageSize;
+        if (maxResultCount%pageSize != 0) maxPageCount++;
+
+        //add user object to the model for add/update function
+        model.addAttribute("user", new User());
+        //add user list to the model for display/search function
+        model.addAttribute("userList", users);
+        //add maxPageCount to the model for display function
+        model.addAttribute("maxPageCount", maxPageCount);
+        //add pageIndex to the model for display/search function
+        model.addAttribute("pageIndex", pageIndex);
+        //add stringQuery to the model for search function
+        model.addAttribute("stringQuery", stringQuery);
+        //add pageSize to the model for display function
+        model.addAttribute("display", pageSize);
+
+        return "admin/searchResult";
+    }
+
+    @RequestMapping("/updateUser")
+    public String updateUser(@RequestParam("role-Id") int roleId,
+                             @Valid @ModelAttribute("user") User user,
+                             BindingResult result,
+                             Model model){
+        if (result.hasErrors()){
+            model.addAttribute("user", user);
+            return "admin/user-update-error.jsp";
+        }
+
+        //retrieve current user form database
+        User currentUser = userService.getUserById(user.getId());
+        //bind the data
+
+        currentUser.setFullName(user.getFullName());
+        currentUser.setPhoneNumber(user.getPhoneNumber());
+        currentUser.setAddress(user.getAddress());
+        Role role = roleService.getRole(roleId);
+        currentUser.setRoleId(role);
+
+        userService.updateUser(currentUser);
+        return "admin/successUpdateUser";
+    }
+
+    @RequestMapping("/userLock")
+    public String lockUser(@RequestParam("userId") int id) {
+        userService.lockUser(id);
+        return "admin/successUpdateUser";
+    }
+
+    @RequestMapping("/userUnlock")
+    public String unlockUser(@RequestParam("userId") int id) {
+        userService.unlockUser(id);
+        return "admin/successUpdateUser";
+    }
+
+    @RequestMapping("/userDelete")
+    public String deleteUser(@RequestParam("userId") int id) {
+        userService.deleteUser(id);
+        return "admin/successUpdateUser";
+    }
+
+    @RequestMapping("/donation")
+    public String showDonations( Model model) {
+        //retrieve users data
+        SearchData<Donation> data = donationService.getDonationByField(stringQuery, pageSize, pageIndex);
+        //retrieve user list from search data
+        List<Donation> users = data.getResultList();
+        //retrieve max page count from search data
+        int maxResultCount = data.getMaxResultCount();
+
+        int maxPageCount = maxResultCount/pageSize;
+        if (maxResultCount%pageSize != 0) maxPageCount++;
+
+        //add user object to the model for add/update function
+        model.addAttribute("user", new User());
+        //add user list to the model for display/search function
+        model.addAttribute("userList", users);
+        //add maxPageCount to the model for display function
+        model.addAttribute("maxPageCount", maxPageCount);
+        //add pageIndex to the model for display/search function
+        model.addAttribute("pageIndex", pageIndex);
+        //add stringQuery to the model for search function
+        model.addAttribute("stringQuery", stringQuery);
+        //add pageSize to the model for display function
+        model.addAttribute("display", pageSize);
+        return "admin/account";
+    }
 }
