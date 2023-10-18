@@ -1,6 +1,7 @@
 package com.fx23121.DonationPlatform.DAO;
 
 import com.fx23121.DonationPlatform.Entity.Donation;
+import com.fx23121.DonationPlatform.SearchData;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -34,15 +35,6 @@ public class DonationDAOImpl implements DonationDAO {
     }
 
     @Override
-    public List<Donation> getDonationList() {
-        //get a new session
-        Session session = sessionFactory.getCurrentSession();
-        //create query
-        Query<Donation> query = session.createQuery("FROM Donation", Donation.class);
-        return query.getResultList();
-    }
-
-    @Override
     public void delete(int id) {
         //get a new session
         Session session = sessionFactory.getCurrentSession();
@@ -53,16 +45,45 @@ public class DonationDAOImpl implements DonationDAO {
     }
 
     @Override
-    public List<Donation> getDonationByFiled(String stringQuery) {
+    public SearchData<Donation> getDonationByField(String stringQuery, int pageSize, int pageIndex, int status) {
         //get a new session
         Session session = sessionFactory.getCurrentSession();
-        //create query
-        Query<Donation> query = session.createQuery("FROM Donation WHERE name LIKE :stringQuery " +
-                                                        "OR code LIKE :stringQuery " +
-                                                        "OR organizationName LIKE :stringQuery " +
-                                                        "OR phoneNumber LIKE :stringQuery",
-                                                        Donation.class);
-        query.setParameter("stringQuery", stringQuery);
-        return query.getResultList();
+
+        //create txt queries
+        String strQuery = "%" + stringQuery + "%";
+        String strResultCountQuery = "SELECT COUNT(d) FROM Donation d WHERE (name LIKE :stringQuery " +
+                "OR code LIKE :stringQuery " +
+                "OR organizationName LIKE :stringQuery " +
+                "OR phoneNumber LIKE :stringQuery) " +
+                "AND status != -1";
+
+        String strDonationQuery = "FROM Donation WHERE (name LIKE :stringQuery " +
+                "OR code LIKE :stringQuery " +
+                "OR organizationName LIKE :stringQuery " +
+                "OR phoneNumber LIKE :stringQuery) " +
+                "AND status != -1";
+
+        if (status != 10) {
+            strResultCountQuery += " AND status = :status";
+            strDonationQuery += " AND status = :status";
+        }
+        //get total result count
+        Query<Long> resultCountQuery = session.createQuery(strResultCountQuery, Long.class);
+        resultCountQuery.setParameter("stringQuery", strQuery);
+        if (status != 10) resultCountQuery.setParameter("status", status);
+        long totalCount = resultCountQuery.getSingleResult();
+
+        //calculate the number of result
+        int resultCount = (int) Math.min(totalCount - (pageIndex - 1) * pageSize, pageSize);
+        //query the result
+        Query<Donation> donationQuery = session.createQuery(strDonationQuery, Donation.class);
+        donationQuery.setParameter("stringQuery", strQuery);
+        if (status != 10) donationQuery.setParameter("status", status);
+        donationQuery.setFirstResult((pageIndex - 1) * pageSize);
+        donationQuery.setMaxResults(resultCount);
+
+        List<Donation> list = donationQuery.getResultList();
+        return new SearchData<>((int) totalCount, list);
     }
+
 }

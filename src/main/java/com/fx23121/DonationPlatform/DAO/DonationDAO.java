@@ -1,8 +1,7 @@
 package com.fx23121.DonationPlatform.DAO;
 
 import com.fx23121.DonationPlatform.Entity.Donation;
-
-import java.util.List;
+import com.fx23121.DonationPlatform.SearchData;
 
 public interface DonationDAO {
 
@@ -10,9 +9,9 @@ public interface DonationDAO {
 
     Donation getDonation(int id);
 
-    List<Donation> getDonationList();
 
     void delete(int id);
 
-    List<Donation> getDonationByFiled(String stringQuery);
+
+    SearchData<Donation> getDonationByField(String stringQuery, int pageSize, int pageIndex, int status);
 }

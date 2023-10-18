@@ -3,8 +3,6 @@ package com.fx23121.DonationPlatform.Service;
 import com.fx23121.DonationPlatform.Entity.Donation;
 import com.fx23121.DonationPlatform.SearchData;
 
-import java.util.List;
-
 public interface DonationService {
 
     void addDonation(Donation donation);
@@ -15,5 +13,5 @@ public interface DonationService {
 
     Donation getDonation(int id);
 
-    SearchData<Donation> getDonationByField(String stringQuery, int pageSize, int pageIndex);
+    SearchData<Donation> getDonationByField(String stringQuery, int pageSize, int pageIndex, int status);
 }

@@ -147,13 +147,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                            <form:errors path="password" cssClass="text-danger"></form:errors>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-6 mb-2">
                                                 <label for="role_id" class="col-form-label">Vai trò:</label>
-                                                <select class="form-control" id="role_id" name="roleId" required>
-                                                  <option value="10" selected>Chọn loại vai trò</option>
-                                                  <option value="1">Admin</option>
-                                                  <option value="10">User</option>
-                                                </select>
+                                                <form:select cssClass="form-control" id="role_id" path="roleId.id" >
+                                                    <form:option value="${user.roleId.id}">${user.roleId.roleName}</form:option>
+                                                    <c:forEach var="role" items="${roleList}">
+                                                        <form:option value="${role.id}">${role.roleName}</form:option>
+                                                    </c:forEach>                                                      
+                                                </form:select>
                                             </div>
 
                                             <div class= "mx-auto my-3">

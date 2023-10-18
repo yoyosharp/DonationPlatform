@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,10 +24,9 @@ public class LoginController {
     }
 
     @PostMapping("/userLogin")
-    public String userLogin(HttpServletRequest request, Model model) {
-        //get fields for user email and user password from login form
-    String userEmail = request.getParameter("email");
-    String userPassword = request.getParameter("password");
+    public String userLogin(@RequestParam("email") String userEmail,
+                            @RequestParam("password") String userPassword,
+                            Model model) {
     //retrieve user from database
     User currentUser = userService.getUserByEmailAndPassword(userEmail, userPassword);
         System.out.println(currentUser);

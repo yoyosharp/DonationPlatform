@@ -7,15 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 public class DonationServiceImpl implements DonationService {
 
     @Autowired
     private DonationDAO donationDao;
 
-    //get all the donations
+    private String[] status = new String[]{"Mới", "Mới tạo", "Đang", "Đang quyên", "Đang quyên góp",
+                                            "Dừng", "Dừng quyên", "Dừng quyên góp", "đóng", "Đã đóng"};
 
     @Override
     @Transactional
@@ -49,7 +48,9 @@ public class DonationServiceImpl implements DonationService {
     }
 
     @Override
-    public SearchData<Donation> getDonationByField(String stringQuery, int pageSize, int pageIndex) {
-        return null;
+    @Transactional
+    public SearchData<Donation> getDonationByField(String stringQuery, int pageSize, int pageIndex, int status) {
+
+        return donationDao.getDonationByField(stringQuery, pageSize, pageIndex, status);
     }
 }

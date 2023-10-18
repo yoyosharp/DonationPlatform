@@ -29,10 +29,10 @@ public class Donation {
     private String endDate;
 
     @Column(name = "money")
-    private int targetMoney;
+    private Integer targetMoney;
 
     @Column(name = "fund")
-    private int fund;
+    private Integer fund;
 
     @Column(name = "organization_name")
     private String organizationName;
@@ -119,7 +119,7 @@ public class Donation {
         this.endDate = endDate;
     }
 
-    public int getTargetMoney() {
+    public Integer getTargetMoney() {
         return targetMoney;
     }
 
@@ -127,7 +127,7 @@ public class Donation {
         this.targetMoney = targetMoney;
     }
 
-    public int getFund() {
+    public Integer getFund() {
         return fund;
     }
 
@@ -182,7 +182,6 @@ public class Donation {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
-                ", createdAt='" + createdAt + '\'' +
                 ", status=" + status +
                 '}';
     }

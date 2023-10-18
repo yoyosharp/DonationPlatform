@@ -152,16 +152,16 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                            <form:errors path="password"></form:errors>
                                                 </div>
                                             </div>
-                                                <div class="col-6">
-                                                    <label for="role_id" class="col-form-label">Vai trò:</label>
-                                                    <select class="form-control" id="role_id" name="roleId" required>
-                                                      <option value="10" selected>Chọn loại vai trò</option>
-                                                      <option value="1">Admin</option>
-                                                      <option value="10">User</option>
-                                                    </select>
-                                                </div>
-                                                
                                             
+                                                <div class="col-6 mb-2">
+                                                    <label for="role_id" class="col-form-label">Vai trò:</label>
+                                                    <form:select cssClass="form-control" id="role_id" path="roleId.id" >
+                                                        <c:forEach var="role" items="${roleList}">
+                                                            <form:option value="${role.id}">${role.roleName}</form:option>
+                                                        </c:forEach>                                                      
+                                                    </form:select>
+                                                </div>
+
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                                     Đóng
@@ -177,8 +177,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         <!-- Modal Add-->
                     </div>
                     <div class="card-body">
-                        
-                        
+                                                
                         <div class="row my-2">
                             <!-- page size section -->
                             <div class="col col-6">
@@ -195,16 +194,16 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             <div class="col col-6 text-end">
                                 <form action="searchUser"> 
                                     <c:if test="${stringQuery != null}">
-                                        <input type="text" name="keyword" placeholder="${stringQuery}"/>
+                                        <input id="txtSearch" type="text" name="keyword" placeholder="${stringQuery}"/>
                                     </c:if>
                                  <button type="submit">Search</button>
                             </form>
                             </div>
-                            
+                            <!-- Search section -->
                         </div>                        
-                        <!-- Search section -->
                         
-                        <table style="border: solid 1px black;" class="table table-striped">
+                        
+                        <table id="resultTable" style="border: solid 1px black;" class="table table-striped">
                             <thead>
                             <tr style="background-color: rgb(190, 190, 190) !important;">
                                 <th>Họ tên</th>
@@ -224,7 +223,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                     <td>${user.phoneNumber}</td>
                                     <td>${user.userName}</td>
                                     <td>${user.roleId.roleName}</td>
-                                    <td>
+                                    <td id="">
                                         <c:if test="${user.status == 0}">
                                             <span class="text-danger fs-6 fw-bold">Đã khoá</span>
                                         </c:if>
@@ -246,7 +245,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="userInfoModalLabel">Chi tiết :
-                                                                <span>UserName</span></h5>
+                                                                <span></span></h5>
                                                             <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
@@ -349,15 +348,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                                                value="${user.userName}" 
                                                                                readonly="true"/>
                                                                     </div>
-                                                                    <div class="col-6">
-                                                                        <label for="updateRole" class="col-form-label">Vai
-                                                                            trò:</label>
-                                                                        <select class="form-control" id="updateRole"
-                                                                            name="role-Id" required>                                                                   
-                                                                            <option value="1">Admin</option>
-                                                                            <option value="10" selected>User</option>
-                                                                        </select>
+
+                                                                    <div class="col-6 mb-2">
+                                                                        <label for="role_id" class="col-form-label">Vai trò:</label>
+                                                                        <form:select cssClass="form-control" id="role_id" path="roleId.id" >
+                                                                            <form:option value="${user.roleId.id}">${user.roleId.roleName}</form:option>
+                                                                            <c:forEach var="role" items="${roleList}">
+                                                                                <form:option value="${role.id}">${role.roleName}</form:option>
+                                                                            </c:forEach>                                                      
+                                                                        </form:select>
                                                                     </div>
+                                                                                                       
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -501,6 +502,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             </tbody>
                         </table>
 
+                        <!-- Page index section -->
                         <div class="text-center">                            
                             <c:forEach var="page" begin="1" end="${pageIndex - 1}">
                                 <a href="${pageContext.request.contextPath}/admin/account?display=${display}&page=${page}">${page}</a>
@@ -510,6 +512,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                 <a href="${pageContext.request.contextPath}/admin/account?display=${display}&page=${page}">${page}</a>
                             </c:forEach>                     
                         </div>
+                        <!-- Page index section -->
                     </div>
                 </div>
             </div>
@@ -531,9 +534,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         url.searchParams.set("display", selected);
         url.searchParams.set("page", 1);
         window.location.href = url.toString();   
-    });
-   
+    }); 
 </script>
+
+
 
 <script src="${pageContext.request.contextPath}/resources/static/admin1/assets/js/JQuery3.3.1.js"></script>
 <script
