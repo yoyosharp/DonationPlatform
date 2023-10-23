@@ -12,10 +12,10 @@ public class UserDonation {
     private int id;
 
     @Column(name = "created")
-    private String createdAt;
+    private String createAt;
 
     @Column(name = "money")
-    private String money;
+    private Integer money;
 
     @Column(name = "name")
     private String name;
@@ -39,8 +39,8 @@ public class UserDonation {
     public UserDonation() {
     }
 
-    public UserDonation(String createdAt, String money, String name, int status, String text) {
-        this.createdAt = createdAt;
+    public UserDonation(String createAt, int money, String name, int status, String text) {
+        this.createAt = createAt;
         this.money = money;
         this.name = name;
         this.status = status;
@@ -56,19 +56,19 @@ public class UserDonation {
         this.id = id;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreateAt() {
+        return createAt;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
     }
 
-    public String getMoney() {
+    public Integer getMoney() {
         return money;
     }
 
-    public void setMoney(String money) {
+    public void setMoney(int money) {
         this.money = money;
     }
 
@@ -116,8 +116,11 @@ public class UserDonation {
     public String toString() {
         return "UserDonation{" +
                 "id=" + id +
+                ", createAt='" + createAt + '\'' +
+                ", money=" + money +
                 ", name='" + name + '\'' +
-                ", status=" + status +
+                ", donation=" + donation +
+                ", user=" + user +
                 '}';
     }
 }

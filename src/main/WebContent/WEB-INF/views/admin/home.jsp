@@ -32,10 +32,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
   <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <nav
-        th:fragment="html_nav"
-        class="sb-topnav navbar navbar-expand navbar-dark bg-dark"
-      >
+      <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
         <a
           class="navbar-brand ps-3"
@@ -52,19 +49,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         </button>
         <!-- Navbar Brand-->
 
-        <!-- Navbar Search-->
-        <form
-          class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"
-        ></form>
-        <!-- Navbar Search-->
-
         <!-- Navbar-->
         <ul class="navbar-nav me-3 me-lg-4">
           <li class="nav-item">
             <a
               class="nav-link active"
               aria-current="page"
-              href="${pageContext.request.contextPath}/logout"
+              href="${pageContext.request.contextPath}/public/logout"
               >Logout</a
             >
           </li>

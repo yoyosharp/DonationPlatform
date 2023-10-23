@@ -1,9 +1,6 @@
 package com.fx23121.DonationPlatform.Service;
 
 import com.fx23121.DonationPlatform.Entity.User;
-import com.fx23121.DonationPlatform.SearchData;
-
-import java.util.List;
 
 public interface UserService {
 

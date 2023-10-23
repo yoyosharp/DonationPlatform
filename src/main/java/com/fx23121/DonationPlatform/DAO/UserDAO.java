@@ -1,7 +1,7 @@
 package com.fx23121.DonationPlatform.DAO;
 
 import com.fx23121.DonationPlatform.Entity.User;
-import com.fx23121.DonationPlatform.SearchData;
+import com.fx23121.DonationPlatform.Service.SearchData;
 
 import java.util.List;
 

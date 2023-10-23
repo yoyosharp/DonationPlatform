@@ -14,15 +14,14 @@ public class Main {
         String jdbcUrl = "jdbc:mysql://localhost:3306/prj321_asm01?useSSL=false&severTimeZone=UTC";
         String driver = "com.mysql.jdbc.Driver";
 
-        try{
+        try {
             System.out.println("Connecting to database" + jdbcUrl);
 
             Class.forName(driver);
             Connection myConn = DriverManager.getConnection(jdbcUrl, user, password);
             System.out.println("Connect successfully!");
             myConn.close();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

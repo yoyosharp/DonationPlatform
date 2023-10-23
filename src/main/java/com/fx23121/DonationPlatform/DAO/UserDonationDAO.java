@@ -1,16 +1,15 @@
 package com.fx23121.DonationPlatform.DAO;
 
-import com.fx23121.DonationPlatform.Entity.Donation;
-import com.fx23121.DonationPlatform.Entity.User;
 import com.fx23121.DonationPlatform.Entity.UserDonation;
-
-import java.util.List;
+import com.fx23121.DonationPlatform.Service.SearchData;
 
 public interface UserDonationDAO {
 
     void saveUserDonation(UserDonation userDonation);
 
-    List<UserDonation> getUserDonationListByDonation(int donationId);
+    SearchData<UserDonation> getUserDonationListByDonation(int donationId, int pageSize, int pageIndex, int status);
 
-    List<UserDonation> getUserDonationListByUser(int userId);
+    SearchData<UserDonation> getUserDonationListByUser(int userId);
+
+    UserDonation getUserDonation(int id);
 }

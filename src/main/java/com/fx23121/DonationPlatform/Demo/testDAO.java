@@ -13,10 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class testDAO {
 
     @Autowired
-     private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Transactional
-     public User getUser(int id) {
+    public User getUser(int id) {
         Session session = sessionFactory.getCurrentSession();
 
         User user = session.get(User.class, id);

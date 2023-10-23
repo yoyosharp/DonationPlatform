@@ -1,7 +1,7 @@
 package com.fx23121.DonationPlatform.DAO;
 
 import com.fx23121.DonationPlatform.Entity.Donation;
-import com.fx23121.DonationPlatform.SearchData;
+import com.fx23121.DonationPlatform.Service.SearchData;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -67,6 +67,7 @@ public class DonationDAOImpl implements DonationDAO {
             strResultCountQuery += " AND status = :status";
             strDonationQuery += " AND status = :status";
         }
+        strDonationQuery += " ORDER BY id DESC";
         //get total result count
         Query<Long> resultCountQuery = session.createQuery(strResultCountQuery, Long.class);
         resultCountQuery.setParameter("stringQuery", strQuery);

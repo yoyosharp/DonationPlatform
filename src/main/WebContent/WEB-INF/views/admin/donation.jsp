@@ -56,7 +56,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 <a
                         class="nav-link active"
                         aria-current="page"
-                        href="${pageContext.request.contextPath}/logout"
+                        href="${pageContext.request.contextPath}/public/logout"
                 >Logout</a
                 >
             </li>
@@ -134,7 +134,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                     modelAttribute="donation"
                                                     method="POST"
                                             >
-                                                <form:hidden path="id"/>
+                                                
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <label for="code" class="col-form-label"
@@ -148,10 +148,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="name" class="col-form-label"
-                                                        >Email:</label
+                                                        >Tên đợt quyên góp:</label
                                                         >
                                                         <form:input
-                                                                type="email"
+                                                                type="text"
                                                                 cssClass="form-control"
                                                                 path="name"
                                                         />
@@ -201,13 +201,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                     </div>
                                                     <div class="col-6">
                                                         <label for="phoneNumber" class="col-form-label"
-                                                        >Số điện thoại</label
+                                                        >Số điện thoại:</label
                                                         >
                                                         <form:input
                                                                 type="number"
                                                                 cssClass="form-control"
                                                                 id="phoneNumber"
                                                                 path="phoneNumber"
+                                                            
                                                         />
                                                         <form:errors path="phoneNumber"></form:errors>
                                                     </div>
@@ -215,13 +216,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <label for="targetMoney" class="col-form-label"
-                                                        >Mục tiêu quyên góp</label
+                                                        >Mục tiêu quyên góp:</label
                                                         >
                                                         <form:input
-                                                                type="text"
+                                                                type="number"
                                                                 cssClass="form-control"
                                                                 id="targetMoney"
                                                                 path="targetMoney"
+                                                                
                                                         />
                                                         <form:errors
                                                                 path="organizationName"
@@ -267,7 +269,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                 <div class="col">
                                     <select id="pageSizeSelect" style="width: fit-content">
                                         <option value="" selected disabled>
-                                            ${param.display}
+                                            ${display}
                                         </option>
                                         <option value="5">5</option>
                                         <option value="10">10</option>
@@ -282,10 +284,10 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                     <select id="donationStatusSelect" style="width: fit-content">
                                         <option value="" selected disabled>
                                             <c:choose>
-                                                <c:when test="${param.status==0}">Mới tạo</c:when>
-                                                <c:when test="${param.status==1}">Đang quyên góp</c:when>
-                                                <c:when test="${param.status==2}">Dừng quyên góp</c:when>
-                                                <c:when test="${param.status==3}">Đã đóng</c:when>
+                                                <c:when test="${status==0}">Mới tạo</c:when>
+                                                <c:when test="${status==1}">Đang quyên góp</c:when>
+                                                <c:when test="${status==2}">Dừng quyên góp</c:when>
+                                                <c:when test="${status==3}">Đã đóng</c:when>
                                                 <c:otherwise>Tất cả</c:otherwise>
                                             </c:choose>
                                         </option>
@@ -356,7 +358,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                         <td>
                                             <div class="row d-flex">
                                                 <!-- Donation Info button -->
-                                                <form action="showDonationDetail" style="padding: 0; width: 100px;" class="my-1 me-1">
+                                                <form action="detail" style="padding: 0; width: 100px;" class="my-1 me-1">
                                                     <input type="hidden" value="${donation.id}" name="donationId">
                                                     <button type="submit" style="width: 100px"
                                                         class="btn btn-info"                                                    
@@ -679,11 +681,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             <!-- Page index section -->
                             <div class="text-center">
                                 <c:forEach var="page" begin="1" end="${pageIndex - 1}">
-                                    <a href="${pageContext.request.contextPath}/admin/donation?display=${display}&page=${page}">${page}</a>
+                                    <a href="${pageContext.request.contextPath}/admin/donation?display=${display}&page=${page}&status=${param.status}">${page}</a>
                                 </c:forEach>
                                 ${pageIndex}
                                 <c:forEach var="page" begin="${pageIndex + 1}" end="${maxPageCount}">
-                                    <a href="${pageContext.request.contextPath}/admin/donation?display=${display}&page=${page}">${page}</a>
+                                    <a href="${pageContext.request.contextPath}/admin/donation?display=${display}&page=${page}&status=${param.status}">${page}</a>
                                 </c:forEach>
                             </div>
                             <!-- Page index section -->
@@ -718,6 +720,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         //select the base url
         var url = new URL(window.location.href.toString());
         url.searchParams.set("status", selected);
+        url.searchParams.set("page", 1)
         window.location.href = url.toString();
     });
 </script>

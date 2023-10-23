@@ -60,7 +60,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             <!-- User identity-->
 
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/logout"
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/public/logout"
                 >Logout</a
                 >
             </li>
@@ -93,7 +93,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Kết quả tìm kiếm</h1>
+                <h1 class="mt-4">Kết quả tìm kiếm cho từ khoá: ${stringQuery}</h1>
                 <div class="card mb-4">
                     <div class="card-header">
                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
@@ -162,7 +162,6 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                             <div class="col-6 mb-2">
                                                 <label for="role_id" class="col-form-label">Vai trò:</label>
                                                 <form:select cssClass="form-control" id="role_id" path="roleId.id" >
-                                                    <form:option value="${user.roleId.id}">${user.roleId.roleName}</form:option>
                                                     <c:forEach var="role" items="${roleList}">
                                                         <form:option value="${role.id}">${role.roleName}</form:option>
                                                     </c:forEach>                                                      
@@ -191,11 +190,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             <!-- page size section -->
                             <div class="col col-6">
                                 <select id="pageSizeSelect" style="width: fit-content;">
-                                    <option value="" selected disabled>${param.display}</option>
+                                    <option value="" selected disabled>${display}</option>
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                 </select>
-                                <span style="width: fit-content;">entries per page</span>
+                                <span style="width: fit-content;">kết quả mỗi trang</span>
                             </div>
                             <!-- page size section -->
                             
@@ -319,8 +318,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                                         <label for="updateEmail" class="col-form-label">Email:</label>
                                                                         <form:input type="email" cssClass="form-control"
                                                                                id="updateEmail" path="email"
-                                                                               placeholder="${user.email}"
-                                                                            disabled="true" />
+                                                                               value="${user.email}"
+                                                                            readonly="true" />
                                                                     </div>
                                                                 </div>
 
@@ -347,18 +346,19 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                                                class="col-form-label">Tài khoản:</label>
                                                                         <form:input type="text" cssClass="form-control"
                                                                                id="updateUsername" path="userName"
-                                                                               placeholder="${user.userName}" 
-                                                                               disabled="true"/>
+                                                                               value="${user.userName}" 
+                                                                               readonly="true"/>
                                                                     </div>
-                                                                    <div class="col-6">
-                                                                        <label for="updateRole" class="col-form-label">Vai
-                                                                            trò:</label>
-                                                                        <select class="form-control" id="updateRole"
-                                                                            name="roleId" required>
-                                                                            <option value="" selected disabled>${user.roleId.roleName}</option>
-                                                                            <option value="1">Admin</option>
-                                                                            <option value="10">User</option>
-                                                                        </select>
+                                                                    <div class="col-6 mb-2">
+                                                                        <label for="role_id" class="col-form-label">Vai trò:</label>
+                                                                        <form:select cssClass="form-control" id="role_id" path="roleId.id" >                                                                            
+                                                                            <c:forEach var="role" items="${roleList}">
+                                                                                <c:if test="{role.id == user.roleId.id}">
+                                                                                    <form:option value="${role.id}" selected="true">${role.roleName}</form:option>
+                                                                                </c:if>
+                                                                                <form:option value="${role.id}">${role.roleName}</form:option>
+                                                                            </c:forEach>                                                      
+                                                                        </form:select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -404,7 +404,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                             </p>
                                                             <form action="userDelete" method="post">
                                                                                                                             
-                                                              <input type="hidden" id="id" name="userId" value="{user.id}">                                                                
+                                                              <input type="hidden" id="id" name="userId" value="${user.id}">                                                                
                                                                 <div class="modal-footer" style="margin-top: 20px">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close
@@ -443,7 +443,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                             <p>Người dùng : ${user.userName}</p>
                                                             <form action="userLock" method="post">
                                                                                                                            
-                                                              <input type="hidden" id="id" name="userId" value="{user.id}"> 
+                                                              <input type="hidden" id="id" name="userId" value="${user.id}"> 
                                                                 <div class="modal-footer" style="margin-top: 20px">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close
@@ -481,7 +481,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                             <p>Người dùng : ${user.userName}</p>
                                                             <form action="userUnlock" method="post">
                                                                                                                            
-                                                              <input type="hidden" id="id" name="userId" value="{user.id}"> 
+                                                              <input type="hidden" id="id" name="userId" value="${user.id}"> 
                                                                 <div class="modal-footer" style="margin-top: 20px">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-bs-dismiss="modal">Close

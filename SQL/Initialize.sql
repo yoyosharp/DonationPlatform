@@ -30,7 +30,7 @@ create table donation(
     created varchar(255),
     description varchar(255),
     end_date varchar(255),
-    money int default 0,
+    money int,
     fund int default 0,
     name varchar(255),
     organization_name varchar(255),
@@ -77,9 +77,47 @@ insert into donation(name, code, organization_name, phone_number, start_date, en
             ('campaign-2', 'sy-02', 'system', '123', '2023-01-01', '2025-01-01','Default campaign'),
             ('campaign-3', 'sy-03', 'system', '123', '2023-01-01', '2025-01-01','Default campaign'),
             ('campaign-4', 'sy-04', 'system', '123', '2023-01-01', '2025-01-01','Default campaign'),
-            ('campaign-5', 'sy-05', 'system', '123', '2023-01-01', '2025-01-01','Default campaign');
+            ('campaign-5', 'sy-05', 'system', '123', '2023-01-01', '2025-01-01','Default campaign'),
+            ('campaign-6', 'sy-00', 'system', '123', '2023-01-01', '2025-01-01','Default campaign'),
+			('campaign-7', 'sy-01', 'system', '123', '2023-01-01', '2025-01-01','Default campaign'),
+            ('campaign-8', 'sy-02', 'system', '123', '2023-01-01', '2025-01-01','Default campaign'),
+            ('campaign-9', 'sy-03', 'system', '123', '2023-01-01', '2025-01-01','Create from database'),
+            ('campaign-10', 'sy-04', 'system', '123', '2023-01-01', '2025-01-01','Create from database'),
+            ('campaign-11', 'sy-05', 'system', '123', '2023-01-01', '2025-01-01','Create from database'),
+            ('donation-13', 'sy-00', 'system', '123', '2023-12-01', '2025-01-01','Create from database'),
+			('donation-14', 'sy-01', 'system', '123', '2023-12-01', '2025-01-01','Create from database'),
+            ('donation-15', 'sy-02', 'system', '123', '2023-12-01', '2025-01-01','Create from database');
 
+update user set phone_number = floor(id * rand() * 10000000);
 
-select * from user where email like '%%';
+update donation set created='2023-01-01';
+update donation set money = 100000000 where id % 3 = 0 or id % 2 = 0 ;
+update donation set status = id % 4 where id > 5;
+update donation set organization_name = 'Quỹ bảo trợ trẻ em' where id%3 = 0;
+update donation set phone_number = floor(id * rand() * 10000);
+update donation set code = concat('de-' , 2*id) where id%2 = 0;
+
+insert into user_donation(user_id, name, donation_id, created, money, text, status)
+	values (1 + floor(rand() * 13), 'user', 3, '2023-01-01', 100000, 'Ủng hộ', 0 ),
+			(1 + floor(rand() * 13), 'user', 3, '2023-01-01', 100000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 3 + floor(rand() * 3), '2023-01-01', 100000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 3 + floor(rand() * 3), '2023-01-01', 100000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 3 + floor(rand() * 3), '2023-01-01', 100000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 3 + floor(rand() * 3), '2023-01-01', 100000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 3 + floor(rand() * 3), '2023-01-01', 100000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 3 + floor(rand() * 3), '2023-01-01', 100000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+			(1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', rand() * 1000000, 'Ủng hộ', 0 ),
+            (1 + floor(rand() * 13), 'user', 5, '2023-01-01', 100000, 'Ủng hộ', 0 );
+
+select * from user;
 select * from donation;
-
+select* from user_donation;

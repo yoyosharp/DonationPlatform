@@ -13,6 +13,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleDAO roleDAO;
+
     @Override
     @Transactional
     public Role getRole(int roleId) {

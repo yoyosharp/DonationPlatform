@@ -1,4 +1,4 @@
-package com.fx23121.DonationPlatform;
+package com.fx23121.DonationPlatform.Service;
 
 import org.springframework.stereotype.Component;
 

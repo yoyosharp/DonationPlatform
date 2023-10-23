@@ -60,7 +60,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             <!-- User identity-->
 
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/logout"
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/public/logout"
                 >Logout</a
                 >
             </li>
@@ -144,9 +144,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                                                 
                                                 <div class="col-6 mb-2">
                                                     <label for="role_id" class="col-form-label">Vai trò:</label>
-                                                    <form:select cssClass="form-control" id="role_id" path="roleId.id" >
-                                                        <form:option value="${user.roleId.id}">${user.roleId.roleName}</form:option>
+                                                    <form:select cssClass="form-control" id="role_id" path="roleId.id" >                                                        
                                                         <c:forEach var="role" items="${roleList}">
+                                                            <c:if test="{role.id == user.roleId.id}">
+                                                                <form:option value="${role.id}" selected="true">${role.roleName}</form:option>
+                                                            </c:if>
                                                             <form:option value="${role.id}">${role.roleName}</form:option>
                                                         </c:forEach>                                                      
                                                     </form:select>

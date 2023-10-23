@@ -14,6 +14,7 @@ public class RoleDAOImpl implements RoleDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+
     @Override
     public Role getRole(int roleId) {
         //get new session

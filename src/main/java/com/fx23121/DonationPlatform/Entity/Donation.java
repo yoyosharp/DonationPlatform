@@ -1,6 +1,8 @@
 package com.fx23121.DonationPlatform.Entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -14,16 +16,20 @@ public class Donation {
     private int id;
 
     @Column(name = "name")
+    @NotNull(message = "Tên chiến dịch không được bỏ trống")
+    @Size(min = 1, message = "Tên chiến dịch không được bỏ trống")
     private String name;
 
     @Column(name = "code", unique = true)
+    @NotNull(message = "Mã chiến dịch không được bỏ trống")
+    @Size(min = 1, message = "Mã chiến dịch không được bỏ trống")
     private String code;
 
     @Column(name = "created")
     private String createdAt;
 
     @Column(name = "description")
-    private String description;
+    private String description = "Chiến dịch thiện nguyện";
 
     @Column(name = "end_date")
     private String endDate;
@@ -35,9 +41,13 @@ public class Donation {
     private Integer fund;
 
     @Column(name = "organization_name")
+    @NotNull(message = "Tên tổ chức không được bỏ trống")
+    @Size(min = 1, message = "Tên tổ chức không được bỏ trống")
     private String organizationName;
 
     @Column(name = "phone_number")
+    @NotNull(message = "SĐT tổ chức không được bỏ trống")
+    @Size(min = 1, message = "SĐT tổ chức không được bỏ trống")
     private String phoneNumber;
 
     @Column(name = "start_date")
@@ -47,7 +57,7 @@ public class Donation {
     private int status;
 
     @OneToMany(mappedBy = "donation", fetch = FetchType.LAZY,
-            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<UserDonation> userDonationList;
 
     //define constructors
@@ -123,7 +133,7 @@ public class Donation {
         return targetMoney;
     }
 
-    public void setTargetMoney(int targetMoney) {
+    public void setTargetMoney(Integer targetMoney) {
         this.targetMoney = targetMoney;
     }
 
@@ -176,12 +186,19 @@ public class Donation {
     }
 
     //define toString()
+
     @Override
     public String toString() {
         return "Donation{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
+                ", description='" + description + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", targetMoney=" + targetMoney +
+                ", organizationName='" + organizationName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", startDate='" + startDate + '\'' +
                 ", status=" + status +
                 '}';
     }
